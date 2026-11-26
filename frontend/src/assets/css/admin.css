@@ -1,0 +1,286 @@
+:root {
+  --admin-primary: #0f6d62;
+  --admin-primary-dark: #0a5d54;
+  --admin-primary-soft: rgba(15, 109, 98, 0.14);
+  --admin-sidebar: #0f172a;
+  --admin-sidebar-alt: #111827;
+  --admin-surface: #edf7f4;
+  --admin-panel: #ffffff;
+  --admin-border: rgba(148, 163, 184, 0.15);
+  --admin-text: #0f172a;
+  --admin-text-soft: #475569;
+  --admin-text-light: #e2e8f0;
+}
+
+.admin-shell,
+.admin-shell * {
+  font-family: "Segoe UI", "Inter", "Helvetica Neue", Arial, sans-serif;
+}
+
+.admin-shell {
+  background: linear-gradient(180deg, var(--admin-surface) 0%, #eaf4f1 100%);
+  color: var(--admin-text);
+  min-height: 100vh;
+}
+
+.admin-shell .admin-sidebar {
+  background: linear-gradient(180deg, var(--admin-sidebar) 0%, var(--admin-sidebar-alt) 100%);
+  color: var(--admin-text-light);
+  box-shadow: inset -1px 0 0 rgba(148, 163, 184, 0.12);
+  border-right: 1px solid var(--admin-border);
+}
+
+.admin-shell .admin-sidebar .nav-link,
+.admin-shell .admin-topbar .nav-link {
+  color: rgba(255, 255, 255, 0.84);
+  border-radius: 12px;
+  padding: 0.7rem 0.95rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  transition: all 0.2s ease;
+}
+
+.admin-shell .admin-sidebar .nav-link:hover,
+.admin-shell .admin-sidebar .nav-link.active,
+.admin-shell .admin-sidebar .admin-nav-active,
+.admin-shell .admin-topbar .nav-link:hover,
+.admin-shell .admin-topbar .nav-link.active {
+  background: linear-gradient(135deg, rgba(13, 106, 96, 0.28), rgba(11, 93, 88, 0.22));
+  color: #ffffff;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.08);
+}
+
+.admin-shell .admin-topbar {
+  background: linear-gradient(180deg, var(--admin-primary) 0%, var(--admin-primary-dark) 100%);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 10px 24px rgba(15, 109, 98, 0.16);
+}
+
+.admin-shell .admin-topbar .container-fluid {
+  display: flex;
+  align-items: center;
+  min-height: 70px;
+  gap: 1rem;
+}
+
+.admin-shell .admin-topbar-badge {
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  color: #ecfffb !important;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.06);
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+.admin-shell .admin-topbar-title {
+  color: rgba(255, 255, 255, 0.95);
+  font-size: 1.05rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.admin-shell .admin-topbar-portal-btn,
+.admin-shell .admin-topbar-user-btn {
+  color: #effefb;
+  border: 1px solid rgba(255, 255, 255, 0.38);
+  background: rgba(255, 255, 255, 0.04);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.06);
+}
+
+.admin-shell .admin-topbar-portal-btn:hover,
+.admin-shell .admin-topbar-user-btn:hover,
+.admin-shell .admin-topbar-portal-btn:focus,
+.admin-shell .admin-topbar-user-btn:focus {
+  background: rgba(255, 255, 255, 0.10);
+  border-color: rgba(255, 255, 255, 0.6);
+  color: #ffffff;
+}
+
+.admin-shell .admin-topbar .dropdown > button {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.34);
+  color: #fff;
+}
+
+.admin-shell .admin-topbar .dropdown .dropdown-menu {
+  border-radius: 14px;
+  border: 1px solid rgba(15, 23, 42, 0.08);
+  box-shadow: 0 18px 40px rgba(15, 23, 42, 0.12);
+}
+
+.admin-shell .admin-topbar .dropdown .dropdown-menu .dropdown-item {
+  color: #1e293b;
+  background: transparent;
+  border: none;
+}
+
+.admin-shell .admin-topbar .dropdown .dropdown-menu .dropdown-item:hover {
+  background-color: #f1f5f9;
+  color: #0f172a;
+}
+
+.admin-shell .admin-main-panel {
+  background: linear-gradient(180deg, #edf7f4 0%, #eaf4f1 100%);
+  padding: 1.5rem 1.25rem 2rem;
+}
+
+.admin-shell .card,
+.admin-shell .card-custom,
+.admin-shell .table,
+.admin-shell .form-control,
+.admin-shell .form-select,
+.admin-shell .input-group {
+  border-color: rgba(148, 163, 184, 0.22);
+  box-shadow: none;
+}
+
+.admin-shell .btn-primary,
+.admin-shell .btn-danger,
+.admin-shell .btn-success,
+.admin-shell .btn-info {
+  border: none;
+  box-shadow: none;
+}
+
+.admin-shell .btn-primary {
+  background: linear-gradient(135deg, var(--admin-primary) 0%, var(--admin-primary-dark) 100%);
+}
+
+.admin-shell .btn-primary:hover {
+  background: linear-gradient(135deg, #0e7269 0%, #0a534e 100%);
+}
+
+.admin-shell .btn-success {
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+}
+
+.admin-shell .btn-danger {
+  background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+}
+
+.admin-shell .btn-info {
+  background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%);
+}
+
+.admin-shell .table thead th {
+  background: rgba(13, 106, 96, 0.05);
+  color: var(--admin-text);
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  font-size: 0.72rem;
+}
+
+.admin-shell .table tbody td {
+  vertical-align: middle;
+  background: rgba(255, 255, 255, 0.65);
+}
+
+.admin-shell .table tbody tr:hover td {
+  background: rgba(13, 106, 96, 0.04);
+}
+
+.admin-shell .admin-question-table {
+  table-layout: fixed;
+  width: 100%;
+}
+
+.admin-shell .admin-question-table .question-id-column {
+  width: 6%;
+}
+
+.admin-shell .admin-question-table .question-chapter-column {
+  width: 13%;
+}
+
+.admin-shell .admin-question-table .question-content-column {
+  width: 34%;
+}
+
+.admin-shell .admin-question-table .question-paralysis-column {
+  width: 11%;
+}
+
+.admin-shell .admin-question-table .question-answers-column {
+  width: 9%;
+}
+
+.admin-shell .admin-question-table .question-status-column {
+  width: 15%;
+}
+
+.admin-shell .admin-question-table .question-actions-column {
+  width: 12%;
+}
+
+.admin-shell .admin-question-table .question-status-column .btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  white-space: nowrap;
+}
+
+.admin-shell .admin-question-table .question-content-copy {
+  min-width: 0;
+}
+
+.admin-shell .admin-question-table .question-chapter-title {
+  white-space: normal;
+  overflow-wrap: anywhere;
+  line-height: 1.4;
+}
+
+.admin-shell .admin-question-table .question-explanation {
+  white-space: normal;
+  overflow-wrap: anywhere;
+  line-height: 1.45;
+}
+
+@media (max-width: 991.98px) {
+  .admin-shell .admin-sidebar {
+    display: block !important;
+    width: 100% !important;
+    max-width: 280px;
+  }
+
+  .admin-shell .admin-question-table {
+    min-width: 960px;
+  }
+
+  .admin-shell .admin-topbar .container-fluid {
+    min-height: 64px;
+  }
+}
+
+@media (min-width: 992px) {
+  .admin-shell {
+    flex-direction: row !important;
+  }
+
+  .admin-shell .admin-sidebar {
+    display: block !important;
+    width: 270px !important;
+    min-width: 270px !important;
+    border-right: 1px solid var(--admin-border) !important;
+  }
+
+  .admin-shell .admin-sidebar.admin-sidebar-collapsed {
+    display: none !important;
+  }
+}
+
+.header-banner {
+    font-family: 'Montserrat', 'Roboto', sans-serif;
+    font-size: 26px;
+    font-weight: 700;
+    /* Độ dày chữ */
+    letter-spacing: 0.5px;
+    /* Khoảng cách giữa các chữ giúp giao diện thoáng hơn */
+  
+    /* Tùy chỉnh màu sắc & padding */
+    color: #ffffff;
+    padding: 22px 30px;
+  
+    
+    
+}

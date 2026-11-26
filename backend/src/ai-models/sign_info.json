@@ -1,0 +1,206 @@
+{
+  "biển báo cấm xe sơ-mi rơ-moóc": {
+    "meaning": "Cấm các loại xe đầu kéo sơ mi rơ moóc hoặc xe kéo rơ moóc.",
+    "advice": "Loại xe siêu trường siêu trọng này không được đi qua tuyến đường trên."
+  },
+  "Đường một chiều": {
+    "meaning": "Cho biết đoạn đường này chỉ cho phép lưu thông phương tiện theo một chiều duy nhất.",
+    "advice": "Không được quay đầu xe lưu thông ngược lại, hãy tuân thủ đi xuôi theo chiều quy định."
+  },
+  "Chỗ quay xe": {
+    "meaning": "Báo hiệu đoạn đường có bố trí vị trí dành cho các phương tiện quay đầu.",
+    "advice": "Chú ý quan sát các hướng, bật xi-nhan xin đường và quay đầu xe cẩn thận."
+  },
+  "Bến xe buýt": {
+    "meaning": "Báo hiệu vị trí đỗ dành riêng cho xe buýt đón trả khách.",
+    "advice": "Chú ý quan sát xe buýt ra vào bến, không dừng đỗ xe vào khu vực của bến xe."
+  },
+  "Cấm đi ngược chiều": {
+    "meaning": "Đường cấm các loại xe lưu thông ngược lại hướng biển báo.",
+    "advice": "Tuyệt đối không được phép tiếp tục đi vào đường này, hãy tìm hướng đi khác."
+  },
+  "Cấm ô tô": {
+    "meaning": "Đường cấm các loại ô tô, nhưng cho phép các phương tiện thô sơ và xe máy.",
+    "advice": "Nếu bạn lái ô tô, không được phép đi vào khu vực này."
+  },
+  "Cấm xe motor và xe máy": {
+    "meaning": "Biển cấm đối với phương tiện là mô tô, xe máy lưu thông.",
+    "advice": "Người đi xe máy phải tìm đường thay thế để lưu thông, không đi vào đường này."
+  },
+  "Cấm xe tải": {
+    "meaning": "Biển cấm các loại phương tiện chở hàng hóa (xe tải) lưu thông.",
+    "advice": "Nếu bạn đang lái xe tải, vui lòng tìm lộ trình thay thế (các xe khác đi bình thường)."
+  },
+  "Cấm xe ô tô khách và xe ô tô tải": {
+    "meaning": "Cấm các loại ô tô khách và ô tô tải lưu thông qua đây.",
+    "advice": "Ô tô con, xe máy và các phương tiện khác đi bình thường. Khách và tải vui lòng đi đường khác."
+  },
+  "Cấm xe gắn máy và xe ba bánh": {
+    "meaning": "Biển báo cấm các phương tiện mô tô, xe gắn máy, xe 2, 3 bánh lưu thông.",
+    "advice": "Các loại xe hai, ba bánh không được phép đi vào đường này, vui lòng đi hướng khác."
+  },
+  "Hạn chế chiều cao": {
+    "meaning": "Biển giới hạn chiều cao tối đa của phương tiện được phép đi qua cầu, hầm...",
+    "advice": "Hãy nắm rõ chiều cao xe của mình. Không cố vượt qua nếu xe cao hơn mức cho phép."
+  },
+  "Cấm rẽ trái": {
+    "meaning": "Biển báo cấm tất cả các phương tiện rẽ trái tại vị trí này.",
+    "advice": "Vui lòng chỉ đi thẳng hoặc rẽ phải theo quy định của biển báo."
+  },
+  "Cấm rẽ phải": {
+    "meaning": "Cấm tất cả các phương tiện được rẽ sang hướng tay phải.",
+    "advice": "Không được rẽ phải, bạn chỉ được đi thẳng, rẽ trái hoặc quay đầu nếu luật cho phép."
+  },
+  "Cấm quay đầu xe": {
+    "meaning": "Biển báo cấm các phương tiện quay đầu xe trên đoạn đường này.",
+    "advice": "Không được quay đầu xe tại đây để tránh gây ùn tắc giao thông."
+  },
+  "Cấm ô tô quay đầu xe": {
+    "meaning": "Chỉ cấm ô tô thực hiện hành động quay đầu, nhưng ô tô vẫn được quyền rẽ trái bình thường.",
+    "advice": "Bạn có thể đi thẳng hoặc rẽ trái. Nếu muốn chuyển hướng ngược lại thì không được quay đầu."
+  },
+  "Cấm rẽ trái và quay đầu xe": {
+    "meaning": "Biển cấm hoàn toàn hành vi rẽ sang tay trái và hành vi quay ngược đầu xe.",
+    "advice": "Chỉ được phép đi thẳng trên làn đường này hoặc rẽ hướng bên phải (nếu còn lối)."
+  },
+  "Cấm rẽ phải và quay đầu xe": {
+    "meaning": "Cấm tất cả phương tiện rẽ theo hướng phải và quay đầu xe.",
+    "advice": "Vui lòng tuân thủ biển báo, chỉ được đi thẳng hoặc rẽ trái (nếu có hướng rẽ trái)."
+  },
+  "Hạn chế tốc độ tối đa 40km/h": {
+    "meaning": "Biển cảnh báo giới hạn tốc độ tối đa 40km/h, tuyến đường thường có nguy hiểm.",
+    "advice": "Tuyệt đối không đi nhanh quá 40km/h để có thể xử lý kịp thời các nguy hiểm trên tuyến."
+  },
+  "Hạn chế tốc độ tối đa 50km/h": {
+    "meaning": "Biển cấm vượt quá tốc độ tối đa cho phép là 50km/h.",
+    "advice": "Duy trì tốc độ chậm hơn hoặc bằng 50km/h để đảm bảo an toàn và tuân thủ luật."
+  },
+  "Hạn chế tốc độ tối đa 60km/h": {
+    "meaning": "Biển cấm vượt quá tốc độ tối đa cho phép là 60km/h.",
+    "advice": "Duy trì tốc độ chậm hơn hoặc bằng 60km/h. Cẩn thận tại những đoạn giao cắt."
+  },
+  "Hạn chế tốc độ tối đa 80km/h": {
+    "meaning": "Biển cấm vượt quá tốc độ tối đa cho phép là 80km/h.",
+    "advice": "Bạn được đi với vận tốc cao nhất là 80km/h, nhớ giữ khoảng cách an toàn với xe trước."
+  },
+  "Kiểm tra": {
+    "meaning": "Báo hiệu phía trước có trạm kiểm tra giao thông, trạm gác hoặc hải quan.",
+    "advice": "Phương tiện phải giảm tốc, dừng lại để trình báo hoặc kiểm tra khi có hiệu lệnh."
+  },
+  "Cấm dừng và đỗ xe": {
+    "meaning": "Biển báo cấm các phương tiện dừng và đỗ xe dọc đoạn đường này.",
+    "advice": "Tuyệt đối không dừng hay đỗ xe để tránh làm ùn tắc và bị phạt vi phạm."
+  },
+  "Cấm đỗ xe": {
+    "meaning": "Cấm đỗ xe lại trong thời gian dài (có thể được dừng xe nổ máy tạm thời).",
+    "advice": "Không tắt máy, chỉ dừng xe trả khách/hàng và rời đi ngay khi xong công việc."
+  },
+  "Cấm rẽ trái và phải": {
+    "meaning": "Cấm tất cả phương tiện rẽ ở ngã rẽ phía trước, không rẽ trái cũng không được rẽ phải.",
+    "advice": "Chỉ được phép đi thẳng. Hãy đi qua giao lộ này một cách an toàn."
+  },
+  "Cấm đi thẳng và rẽ phải": {
+    "meaning": "Cấm phương tiện chuyển hướng đi thẳng hoặc rẽ sang tay phải.",
+    "advice": "Bạn chỉ được phép rẽ sang hướng tay trái tại vị trí cắm biển."
+  },
+  "Hướng đi cho phép rẽ trái": {
+    "meaning": "Biển hiệu lệnh buộc tất cả các phương tiện đến đây chỉ được phép rẽ tay trái.",
+    "advice": "Theo đúng hiệu lệnh, bạn hãy bật xi nhan và rẽ trái tại vòng xoay hoặc ngã nhánh."
+  },
+  "Phải đi vòng sang bên phải": {
+    "meaning": "Báo hiệu yêu cầu các phương tiện phải đi vòng sang phía bên phải của chướng ngại vật.",
+    "advice": "Hãy di chuyển theo hướng mũi tên báo hiệu (vòng sang phải) để đảm bảo an toàn."
+  },
+  "Nơi giao nhau chạy theo vòng xuyến": {
+    "meaning": "Báo hiệu phía trước là vòng xuyến (bùng binh).",
+    "advice": "Giảm tốc độ, nhường đường cho các xe bên trong bùng binh (phía bên trái)."
+  },
+  "Biển gộp làn đường theo phương tiện": {
+    "meaning": "Hướng dẫn phân làn đường dành riêng cho từng loại phương tiện cụ thể.",
+    "advice": "Hãy đi vào đúng làn đường dành cho phương tiện của mình để đảm bảo an toàn."
+  },
+  "Chỉ dành cho xe máy": {
+    "meaning": "Làn đường hoặc tuyến đường chỉ dành riêng cho xe máy lưu thông.",
+    "advice": "Lái xe ô tô không được phép lấn vào làn đường này."
+  },
+  "Chỉ dành cho xe tải": {
+    "meaning": "Cảnh báo làn đường chỉ ưu tiên hoặc cho phép dành riêng cho phương tiện xe tải.",
+    "advice": "Xe con và xe máy tránh đi vào làn đường nếu không được phép, để đảm bảo lưu thông xe lớn."
+  },
+  "Chỉ dành xe tải và xe công": {
+    "meaning": "Cảnh báo hoặc hạn chế cho làn đường dành riêng cho xe lớn (tải, công ten nơ).",
+    "advice": "Người lái xe nhỏ nên quan sát, tránh đi sát để phòng mù điểm mù của xe lớn."
+  },
+  "Chỗ ngoặt nguy hiểm vòng bên trái": {
+    "meaning": "Báo hiệu phía trước có chỗ ngoặt gấp, khuất tầm nhìn vòng sang bên trái.",
+    "advice": "Giảm tốc độ, đi đúng làn đường của mình và không vượt xe tại đoạn ngoặt này."
+  },
+  "Chỗ ngoặt nguy hiểm vòng bên phải": {
+    "meaning": "Có chỗ ngoặt hẹp, vướng hoặc khuất nếp nhìn, uốn vòng sang tay phải.",
+    "advice": "Bật đèn nếu trời tối, giảm tốc và ôm thật gọn làn đường phía bên phải."
+  },
+  "Nhiều chỗ ngoặt nguy hiểm liên tiếp, chỗ đầu tiên sang phải": {
+    "meaning": "Báo hiệu đoạn đường cong quanh co liên tục, khúc cua đầu tiên vòng sang phía phải.",
+    "advice": "Biển báo nguy hiểm! Hãy giảm tốc, không được lấn làn hay vượt xe trong vùng vòng cua."
+  },
+  "Đường bị thu hẹp về phía trái": {
+    "meaning": "Báo hiệu đoạn đường phía trước sẽ thu hẹp mép đường bên trái.",
+    "advice": "Giảm tốc độ và từ từ nhập về làn đường bên phải. Chú ý các xe bên trái chuyển làn."
+  },
+  "Đường bị thu hẹp về phía phải": {
+    "meaning": "Báo hiệu phần đường phía trước sẽ bị hẹp lại ở phía bên phải.",
+    "advice": "Giảm tốc độ, lưu ý các xe từ bên phải muốn nhập làn vào phần đường còn lại."
+  },
+  "Giao nhau với đường đồng cấp": {
+    "meaning": "Báo hiệu tuyến đường phía trước giao nhau với đường có cùng cấp bậc.",
+    "advice": "Chú ý giảm tốc độ và nhường đường cho phương tiện từ cả hai phía theo quy tắc giao thông."
+  },
+  "Đường giao nhau (ngã ba bên phải)": {
+    "meaning": "Báo hiệu phía trước có đường giao nhau ngã ba, đường nhánh nằm bên phải.",
+    "advice": "Giảm tốc độ, chú ý xe cộ nhập làn từ phía bên phải."
+  },
+  "Đường giao nhau (ngã ba bên trái)": {
+    "meaning": "Báo hiệu phía trước có đường giao nhau ngã ba nhánh nằm bên phía tay trái.",
+    "advice": "Chú ý quan sát các phương tiện muốn rẽ hoặc nhập làn từ nhánh bên tay trái."
+  },
+  "Giao nhau với đường không ưu tiên": {
+    "meaning": "Báo hiệu đường bạn đang đi là đường ưu tiên, phía trước giao với đường không ưu tiên.",
+    "advice": "Bạn được ưu tiên đi trước, tuy nhiên vẫn cần giảm tốc độ và chú ý an toàn khi qua ngã tư."
+  },
+  "Giao nhau với đường sắt có rào chắn": {
+    "meaning": "Cảnh báo phía trước là đường sắt cắt ngang có người gác hoặc rào chắn tự động.",
+    "advice": "Giảm tốc, chú ý quan sát đèn báo, dừng xe trước rào chắn khi có tín hiệu tàu chuẩn bị ngang qua."
+  },
+  "Đường có gồ giảm tốc": {
+    "meaning": "Báo hiệu có gờ giảm tốc trên mặt đường phía trước.",
+    "advice": "Nhả ga, giảm tốc độ ngay để xe không bị xóc, đảm bảo an toàn và bảo vệ xe."
+  },
+  "Đường người đi bộ cắt ngang": {
+    "meaning": "Báo hiệu phía trước có phần đường dành riêng cho người đi bộ qua đường.",
+    "advice": "Hãy giảm tốc độ, chú ý quan sát và nhường đường cho người đi bộ."
+  },
+  "Trẻ em": {
+    "meaning": "Báo hiệu khu vực gần trường học, sân chơi thường có trẻ em chạy sát hoặc băng qua đường.",
+    "advice": "Hãy giảm tốc độ ở mức thấp nhất, sẵn sàng chân phanh đề phòng tình huống bất ngờ."
+  },
+  "Nguy hiểm khác": {
+    "meaning": "Báo hiệu có một nguy hiểm mà chưa có biển cảnh báo chuyên dụng nào khác.",
+    "advice": "Giảm tốc độ, tập trung tối đa sự chú ý để sẵn sàng đối mặt với rủi ro phía trước."
+  },
+  "Chiều cao tĩnh không thực tế": {
+    "meaning": "Báo hiệu chiều cao tối đa của khoảng không gian bên dưới cầu/hầm qua.",
+    "advice": "Đo đạc kỹ độ cao thực của xe trước khi qua. Tránh kẹt gầm với xe tải lớn, container."
+  },
+  "Đi chậm": {
+    "meaning": "Báo hiệu yêu cầu người điều khiển phương tiện phải đi với tốc độ chậm.",
+    "advice": "Giảm ngay tốc độ, chú ý quan sát để xử lý những tình huống bất ngờ có thể xảy ra."
+  },
+  "Chú ý chướng ngại vật - Vòng tránh ra hai bên": {
+    "meaning": "Báo hiệu yêu cầu người điều khiển phương tiện phải né chướng ngại vật về góc phải.",
+    "advice": "Giảm tốc độ và đi vòng từ phải sang chướng ngại vật an toàn nhất."
+  },
+  "Chú ý chướng ngại vật - Vòng tránh sang phải": {
+    "meaning": "Báo hiệu yêu cầu người điều khiển phương tiện phải né chướng ngại vật về góc phải.",
+    "advice": "Giảm tốc độ và đi vòng từ phải sang chướng ngại vật an toàn nhất."
+  }
+}

@@ -1,0 +1,1175 @@
+/* ==============================================================================
+   HỆ THỐNG HỌC & THI THỬ LUẬT GIAO THÔNG ĐƯỜNG BỘ
+   TẬP TRUNG TOÀN BỘ CSS TẠI 1 FILE DUY NHẤT (frontend/src/style.css)
+   Nguyên tắc:
+   1. Ưu tiên tối đa sử dụng các class tiện ích có sẵn của Bootstrap 5.
+   2. Toàn bộ CSS tùy chỉnh đặc thù được quy tụ tập trung trong file này.
+   3. Không viết thẻ <style scoped> rải rác trong từng component/view Vue.
+   ============================================================================== */
+
+/* --------------------------------------------------------------------------
+   1. CSS VARIABLES & COLOR PALETTES
+   -------------------------------------------------------------------------- */
+:root {
+  --primary: #2b7ef1;
+  --primary-hover: #1e67d4;
+  --primary-light: #ebf4ff;
+  --primary-soft: #dfeefc;
+  --primary-gradient: linear-gradient(135deg, #4ea1ff 0%, #2b7ef1 35%, #1d5ecf 100%);
+  --paralysis-gradient: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+  --success-gradient: linear-gradient(135deg, #10b981 0%, #059669 100%);
+
+  --bg-shell: #dfeaf3;
+  --bg-main: #f5f7fb;
+  --card-bg: rgba(255, 255, 255, 0.78);
+  --soft-border: rgba(31, 69, 125, 0.14);
+  --text-main: #1a1d26;
+  --text-soft: #5b677b;
+  --text-muted: #6f7c8f;
+  --shadow-soft: 0 16px 36px rgba(23, 55, 90, 0.08);
+
+  --font-family: 'Plus Jakarta Sans', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --font-display: 'Georgia', 'Times New Roman', serif;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --transition-fast: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-normal: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* --------------------------------------------------------------------------
+   2. GLOBAL TYPOGRAPHY & RESET
+   -------------------------------------------------------------------------- */
+body {
+  font-family: var(--font-family);
+  background-color: var(--bg-main);
+  color: var(--text-main);
+  margin: 0;
+  padding: 0;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+.h1,
+.h2,
+.h3,
+.h4,
+.h5,
+.h6 {
+  font-family: var(--font-family);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.home-view {
+  background: var(--bg-shell);
+}
+
+a {
+  text-decoration: none;
+  transition: var(--transition-fast);
+}
+
+/* --------------------------------------------------------------------------
+   3. CUSTOM BUTTONS & GRADIENTS
+   -------------------------------------------------------------------------- */
+.btn-primary {
+  background: var(--primary-gradient);
+  border: none;
+  box-shadow: 0 4px 10px rgba(37, 99, 235, 0.25);
+  font-weight: 600;
+}
+
+.btn-primary:hover,
+.btn-primary:focus {
+  background: linear-gradient(135deg, #1d4ed8 0%, #1e40af 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 15px rgba(37, 99, 235, 0.35);
+}
+
+.btn-cta-primary,
+.btn-cta-secondary,
+.btn-cta-danger {
+  border-radius: 14px;
+  padding: 0.85rem 1.4rem;
+  font-size: 0.95rem;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  transition: var(--transition-normal);
+}
+
+.btn-danger-gradient {
+  background: var(--paralysis-gradient);
+  color: #ffffff;
+  border: none;
+  font-weight: 600;
+  box-shadow: 0 4px 10px rgba(239, 68, 68, 0.25);
+  transition: var(--transition-fast);
+}
+
+.btn-danger-gradient:hover {
+  background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
+  color: #ffffff;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 15px rgba(239, 68, 68, 0.35);
+}
+
+.btn-soft-primary {
+  background-color: var(--primary-light);
+  color: var(--primary);
+  border: 1px solid rgba(37, 99, 235, 0.15);
+  font-weight: 600;
+}
+
+.btn-soft-primary:hover {
+  background-color: #dbeafe;
+  color: var(--primary-hover);
+}
+
+.btn-soft-danger {
+  background-color: #fef2f2;
+  color: #dc2626;
+  border: 1px solid rgba(239, 68, 68, 0.15);
+  font-weight: 600;
+}
+
+.btn-soft-danger:hover {
+  background-color: #fee2e2;
+  color: #b91c1c;
+}
+
+.login-alert-close {
+  background-size: 0.75rem;
+}
+
+/* Gradient Text */
+.text-gradient-primary {
+  background: var(--primary-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.text-gradient-danger {
+  background: var(--paralysis-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* --------------------------------------------------------------------------
+   4. HOME PAGE HERO & QUICK START CARD
+   -------------------------------------------------------------------------- */
+.hero-shell {
+  background: var(--bg-shell);
+  min-height: 760px;
+  display: flex;
+  align-items: center;
+}
+
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.62rem 1.2rem;
+  border-radius: 999px;
+  background: rgba(123, 194, 255, 0.18);
+  color: #1b73d3;
+  border: 1px solid rgba(34, 116, 202, 0.28);
+  font-size: 0.92rem;
+  font-weight: 700;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.5);
+}
+
+.hero-title {
+  margin-top: 1.75rem;
+  margin-bottom: 1.25rem;
+  font-family: var(--font-display);
+  font-weight: 700;
+  line-height: 0.97;
+  letter-spacing: -0.05em;
+  font-size: clamp(4rem, 5vw, 7rem);
+  color: #101722;
+  max-width: 700px;
+}
+
+.hero-title span {
+  display: block;
+  color: #20a4d6;
+  font-style: normal;
+  text-shadow: 0 2px 0 rgba(255, 255, 255, 0.6);
+}
+
+.hero-subtitle {
+  max-width: 720px;
+  font-size: 1.06rem;
+  line-height: 1.7;
+  color: var(--text-soft);
+  margin-bottom: 2rem;
+}
+
+.hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.btn-cta-primary {
+  background: linear-gradient(180deg, #2d9cf2 0%, #1f7ae2 100%);
+  color: #fff;
+  box-shadow: 0 10px 22px rgba(33, 110, 214, 0.3);
+}
+
+.btn-cta-primary:hover {
+  color: #fff;
+}
+
+.btn-cta-secondary {
+  background: rgba(131, 177, 255, 0.14);
+  border: 1px solid rgba(35, 100, 177, 0.18);
+  color: #204c9a;
+}
+
+.btn-cta-danger {
+  background: rgba(255, 255, 255, 0.6);
+  color: #d22b35;
+  border: 1px solid rgba(206, 63, 63, 0.18);
+}
+
+.hero-trust-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem 2.2rem;
+  color: var(--text-soft);
+  font-size: 0.93rem;
+  font-weight: 600;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(111, 124, 143, 0.18);
+}
+
+.hero-trust-row i {
+  margin-right: 0.45rem;
+  font-size: 1rem;
+}
+
+.hero-trust-row .bi-check-circle-fill {
+  color: #22c55e;
+}
+
+.hero-trust-row .bi-lightning-charge-fill {
+  color: #f59e0b;
+}
+
+.hero-trust-row .bi-phone-fill {
+  color: #3b82f6;
+}
+
+.hero-card {
+  background: rgba(255, 255, 255, 0.65);
+  border: 1px solid rgba(30, 64, 175, 0.12);
+  box-shadow: var(--shadow-soft);
+  border-radius: 26px;
+  padding: 1.3rem 1.2rem 1rem;
+  backdrop-filter: blur(8px);
+}
+
+.hero-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 0.7rem;
+}
+
+.hero-card-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: rgba(88, 158, 252, 0.12);
+  color: #1b6ed8;
+  border: 1px solid rgba(52, 116, 190, 0.18);
+  border-radius: 999px;
+  padding: 0.42rem 0.8rem;
+  font-size: 0.82rem;
+  font-weight: 700;
+}
+
+.hero-card-label {
+  color: var(--text-soft);
+  font-size: 0.9rem;
+}
+
+.hero-card h3 {
+  font-size: clamp(2.1rem, 2vw, 2.7rem);
+  color: #101722;
+  margin: 0 0 1.2rem;
+  letter-spacing: -0.04em;
+}
+
+.license-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.9rem;
+  margin-bottom: 1rem;
+}
+
+.license-item {
+  background: rgba(255, 255, 255, 0.66);
+  border: 1px solid rgba(26, 29, 38, 0.18);
+  border-radius: 16px;
+  padding: 0.95rem 0.9rem;
+  cursor: pointer;
+  transition: var(--transition-normal);
+  min-height: 126px;
+}
+
+.license-item:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 18px rgba(46, 76, 110, 0.08);
+  border-color: rgba(43, 126, 241, 0.3);
+}
+
+.license-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.55rem;
+}
+
+.license-code {
+  font-size: 2.05rem;
+  font-weight: 800;
+  line-height: 1;
+  color: #1b1f2a;
+  letter-spacing: -0.05em;
+}
+
+.license-name {
+  color: var(--text-soft);
+  font-size: 0.93rem;
+  min-height: 2.6em;
+  line-height: 1.4;
+}
+
+.license-meta {
+  margin-top: 0.7rem;
+  font-size: 0.88rem;
+  color: #2b7ef1;
+  font-weight: 700;
+}
+
+.license-icon-primary {
+  color: #2b7ef1;
+}
+
+.license-icon-info {
+  color: #21a5d7;
+}
+
+.license-icon-success {
+  color: #17a66d;
+}
+
+.license-icon-warning {
+  color: #f59e0b;
+}
+
+.license-icon-secondary {
+  color: #5b677b;
+}
+
+.license-icon-danger {
+  color: #e65959;
+}
+
+.license-icon-dark {
+  color: #1b2333;
+}
+
+.hero-card-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.45rem;
+  width: 100%;
+  border-radius: 14px;
+  border: 1px solid rgba(31, 90, 190, 0.26);
+  background: rgba(239, 246, 255, 0.9);
+  color: #1c66d3;
+  font-weight: 700;
+  padding: 0.9rem 1rem;
+  text-decoration: none;
+}
+
+.hero-card-link:hover {
+  color: #1c66d3;
+  background: rgba(219, 234, 254, 0.95);
+}
+
+@media (max-width: 991.98px) {
+  .hero-shell {
+    min-height: auto;
+    padding-top: 3rem;
+    padding-bottom: 3rem;
+  }
+
+  .hero-title {
+    font-size: clamp(3rem, 7vw, 4.8rem);
+  }
+
+  .hero-card {
+    margin-top: 1rem;
+  }
+}
+
+@media (max-width: 575.98px) {
+  .hero-badge {
+    width: 100%;
+    justify-content: center;
+    text-align: center;
+  }
+
+  .hero-actions {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+
+  .hero-card-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .license-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.navbar-custom {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border-color);
+  box-shadow: 0 1px 2px 0 rgba(15, 23, 42, 0.05);
+  padding-top: 0.75rem;
+  padding-bottom: 0.75rem;
+}
+
+.navbar-custom .nav-link {
+  font-weight: 600;
+  color: #475569;
+  padding: 0.5rem 0.85rem !important;
+  border-radius: 8px;
+  transition: var(--transition-fast);
+}
+
+.navbar-custom .nav-link:hover,
+.navbar-custom .nav-link.active {
+  color: var(--primary);
+  background-color: var(--primary-light);
+}
+
+.app-logo-box {
+  width: 40px;
+  height: 40px;
+  background: var(--primary-gradient);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 10px rgba(37, 99, 235, 0.3);
+}
+
+.app-logo-img {
+  width: 42px;
+  height: 42px;
+  object-fit: contain;
+  border-radius: 10px;
+  background-color: #ffffff;
+  padding: 2px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  border: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+.dropdown-menu-wide {
+  min-width: 250px;
+  border-radius: 12px;
+}
+
+.dropdown-icon-box {
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+}
+
+.user-avatar-circle {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--primary-gradient);
+  color: #ffffff;
+  font-weight: 700;
+  font-size: 0.85rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* --------------------------------------------------------------------------
+   5. FOOTER COMPONENT STYLES (AppFooter.vue)
+   -------------------------------------------------------------------------- */
+.app-footer {
+  background-color: #0b1120;
+  color: #94a3b8;
+  border-top: 1px solid #1e293b;
+}
+
+.footer-link {
+  color: #94a3b8;
+  transition: all 0.2s ease;
+  display: inline-block;
+}
+
+.footer-link:hover {
+  color: #ffffff;
+  transform: translateX(3px);
+}
+
+.footer-logo-icon {
+  width: 38px;
+  height: 38px;
+  background: var(--primary-gradient);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.4);
+}
+
+.footer-logo-img {
+  width: 44px;
+  height: 44px;
+  object-fit: contain;
+  border-radius: 10px;
+  background-color: #ffffff;
+  padding: 3px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* --------------------------------------------------------------------------
+   6. LAYOUTS (DefaultLayout.vue & ExamLayout.vue)
+   -------------------------------------------------------------------------- */
+.btn-back-to-top {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--primary-gradient);
+  color: #ffffff;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1030;
+  transition: all 0.25s ease-in-out;
+  cursor: pointer;
+}
+
+.btn-back-to-top:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 20px rgba(37, 99, 235, 0.4);
+}
+
+/* Exam Layout Dedicated Styles */
+.exam-layout-root {
+  background-color: var(--dark-bg);
+}
+
+.exam-header-bar {
+  background: var(--dark-header);
+  border-bottom: 1px solid #1e293b;
+  height: 60px;
+  z-index: 1040;
+}
+
+.exam-body-container {
+  height: calc(100vh - 60px);
+  background-color: #f1f5f9;
+}
+
+/* --------------------------------------------------------------------------
+   7. VIEWS & CARDS (HomeView.vue, etc.)
+   -------------------------------------------------------------------------- */
+.hero-gradient-bg {
+  background: radial-gradient(circle at 10% 20%, rgba(239, 246, 255, 0.7) 0%, rgba(248, 250, 252, 1) 90%);
+}
+
+.feature-icon-box {
+  width: 54px;
+  height: 54px;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.license-select-card {
+  background: #ffffff;
+  transition: all 0.2s ease-in-out;
+}
+
+.license-select-card:hover {
+  border-color: var(--primary) !important;
+  background-color: var(--primary-light);
+  transform: translateY(-2px);
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}
+
+.card-custom {
+  background: #ffffff;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  box-shadow: 0 1px 3px 0 rgba(15, 23, 42, 0.08);
+  transition: var(--transition-normal);
+}
+
+.card-custom:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 15px -3px rgba(15, 23, 42, 0.08);
+  border-color: #cbd5e1;
+}
+
+/* --------------------------------------------------------------------------
+   8. ANIMATIONS & TRANSITIONS
+   -------------------------------------------------------------------------- */
+.animate-blink {
+  animation: blink 1.2s infinite;
+}
+
+@keyframes blink {
+
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.2;
+  }
+}
+
+/* Page Transition for Vue Router in App.vue */
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.2s ease;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f5f9;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+/* --------------------------------------------------------------------------
+   9. UTILITY & HELPER CLASSES (Centralized custom CSS)
+   -------------------------------------------------------------------------- */
+.fs-xs {
+  font-size: 0.75rem !important;
+}
+
+.fs-xxs {
+  font-size: 0.65rem !important;
+}
+
+.letter-spacing-wide {
+  letter-spacing: 0.08em;
+}
+
+
+
+/* --------------------------------------------------------------------------
+   10. STUDY & PRACTICE MODULE (StudyView.vue & ParalysisView.vue)
+   -------------------------------------------------------------------------- */
+.study-chapter-pill {
+  transition: all 0.2s ease-in-out;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.study-chapter-pill:hover {
+  background-color: #e2e8f0;
+}
+
+.study-chapter-pill.active {
+  background-color: var(--primary);
+  color: #ffffff !important;
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+}
+
+.study-question-card {
+  border-radius: 16px;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.04);
+  transition: all 0.25s ease;
+}
+
+.study-question-card:hover {
+  box-shadow: 0 6px 18px rgba(15, 23, 42, 0.08);
+}
+
+.study-question-card.border-paralysis {
+  border-left: 4px solid #ef4444 !important;
+}
+
+.study-option-item {
+  border: 1.5px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 0.85rem 1rem;
+  background-color: #f8fafc;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  user-select: none;
+}
+
+.study-option-item:hover:not(.locked) {
+  border-color: var(--primary);
+  background-color: #eff6ff;
+  transform: translateX(4px);
+}
+
+.study-option-item.correct {
+  border-color: #10b981 !important;
+  background-color: #ecfdf5 !important;
+  color: #065f46 !important;
+}
+
+.study-option-item.wrong {
+  border-color: #ef4444 !important;
+  background-color: #fef2f2 !important;
+  color: #991b1b !important;
+}
+
+.study-option-badge {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 0.85rem;
+  background-color: #e2e8f0;
+  color: #475569;
+  flex-shrink: 0;
+  transition: all 0.2s ease;
+}
+
+.study-option-item.correct .study-option-badge {
+  background-color: #10b981;
+  color: #ffffff;
+}
+
+.study-option-item.wrong .study-option-badge {
+  background-color: #ef4444;
+  color: #ffffff;
+}
+
+.explanation-box {
+  background-color: #fffbeb;
+  border: 1px solid #fde68a;
+  border-left: 4px solid #f59e0b;
+  border-radius: 12px;
+  padding: 1rem 1.25rem;
+}
+
+.paralysis-warning-box {
+  background: linear-gradient(135deg, #fef2f2 0%, #fee2e2 100%);
+  border: 1px solid #fecaca;
+  border-left: 4px solid #ef4444;
+  border-radius: 12px;
+}
+
+.question-palette-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(42px, 1fr));
+  gap: 8px;
+}
+
+.question-palette-btn {
+  width: 100%;
+  height: 42px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  font-size: 0.85rem;
+  border-radius: 10px;
+  border: 1.5px solid #cbd5e1;
+  background-color: #ffffff;
+  color: #334155;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.question-palette-btn:hover {
+  border-color: var(--primary);
+  color: var(--primary);
+  transform: translateY(-2px);
+}
+
+.question-palette-btn.active {
+  border-color: var(--primary) !important;
+  outline: 2px solid rgba(37, 99, 235, 0.4);
+  font-weight: 700;
+}
+
+.question-palette-btn.palette-correct {
+  background-color: #10b981 !important;
+  border-color: #059669 !important;
+  color: #ffffff !important;
+}
+
+.question-palette-btn.palette-wrong {
+  background-color: #ef4444 !important;
+  border-color: #dc2626 !important;
+  color: #ffffff !important;
+}
+
+.question-palette-btn.palette-skipped {
+  background-color: #f1f5f9;
+  border-color: #cbd5e1;
+  color: #64748b;
+}
+
+.question-img-container {
+  max-width: 100%;
+  max-height: 280px;
+  object-fit: contain;
+  border-radius: 12px;
+  border: 1px solid #e2e8f0;
+}
+
+.stat-metric-card {
+  border-radius: 14px;
+  border: 1px solid #e2e8f0;
+  background: #ffffff;
+  padding: 1rem 1.25rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+/* --------------------------------------------------------------------------
+   11. LOOKUP MODULE (SignsView.vue & FinesView.vue)
+   -------------------------------------------------------------------------- */
+.sign-card {
+  border-radius: 16px;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  transition: all 0.25s ease;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.sign-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 20px -3px rgba(15, 23, 42, 0.08);
+  border-color: #cbd5e1;
+}
+
+.sign-img-box {
+  width: 100%;
+  height: 120px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #f8fafc;
+  padding: 0.75rem;
+}
+
+.sign-img {
+  max-width: 90px;
+  max-height: 90px;
+  object-fit: contain;
+  transition: transform 0.2s ease;
+}
+
+.sign-card:hover .sign-img {
+  transform: scale(1.08);
+}
+
+.sign-modal-img {
+  max-width: 180px;
+  max-height: 180px;
+  object-fit: contain;
+}
+
+.fine-card {
+  border-radius: 16px;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  transition: all 0.2s ease;
+}
+
+.fine-card:hover {
+  box-shadow: 0 8px 18px rgba(15, 23, 42, 0.06);
+  transform: translateY(-2px);
+}
+
+.fine-card-motorcycle {
+  border-left: 4px solid #2563eb !important;
+}
+
+.fine-card-car {
+  border-left: 4px solid #ef4444 !important;
+}
+
+.fine-card-other {
+  border-left: 4px solid #64748b !important;
+}
+
+.fine-amount-badge {
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: #dc2626;
+  letter-spacing: -0.01em;
+}
+
+.penalty-addition-box {
+  background-color: #fef2f2;
+  border: 1px solid #fee2e2;
+  border-radius: 10px;
+  padding: 0.65rem 0.85rem;
+  font-size: 0.825rem;
+}
+
+.modal-backdrop-blur {
+  background: rgba(15, 23, 42, 0.6) !important;
+  backdrop-filter: blur(4px) !important;
+  -webkit-backdrop-filter: blur(4px) !important;
+}
+
+.text-truncate-2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* --------------------------------------------------------------------------
+   12. EXAM ROOM & PALETTE (ExamRoomView.vue & ExamSelectView.vue)
+   -------------------------------------------------------------------------- */
+.exam-timer-box {
+  font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+  font-weight: 700;
+  font-size: 1.25rem;
+  letter-spacing: 0.05em;
+  padding: 0.35rem 1rem;
+  border-radius: 30px;
+  display: inline-flex;
+  align-items: center;
+  transition: all 0.3s ease;
+}
+
+.timer-normal {
+  background: rgba(16, 185, 129, 0.2);
+  color: #34d399;
+  border: 1px solid rgba(16, 185, 129, 0.4);
+}
+
+.timer-warning {
+  background: rgba(245, 158, 11, 0.2);
+  color: #fbbf24;
+  border: 1px solid rgba(245, 158, 11, 0.4);
+}
+
+.timer-danger {
+  background: rgba(239, 68, 68, 0.25);
+  color: #f87171;
+  border: 1px solid rgba(239, 68, 68, 0.5);
+  animation: blink 1s infinite;
+}
+
+.exam-palette-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 8px;
+}
+
+.exam-palette-btn {
+  height: 42px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 0.9rem;
+  border-radius: 10px;
+  border: 1.5px solid #cbd5e1;
+  background-color: #f8fafc;
+  color: #334155;
+  cursor: pointer;
+  transition: all 0.15s ease-in-out;
+}
+
+.exam-palette-btn:hover {
+  border-color: var(--primary);
+  color: var(--primary);
+  transform: translateY(-2px);
+}
+
+.exam-palette-btn.current {
+  border-color: #0284c7 !important;
+  box-shadow: 0 0 0 3px rgba(2, 132, 199, 0.35);
+  font-weight: 800;
+}
+
+.exam-palette-btn.answered {
+  background-color: var(--primary) !important;
+  border-color: #1d4ed8 !important;
+  color: #ffffff !important;
+}
+
+.exam-option-card {
+  border: 2px solid #e2e8f0;
+  border-radius: 14px;
+  padding: 1rem 1.25rem;
+  background-color: #ffffff;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  user-select: none;
+}
+
+.exam-option-card:hover {
+  border-color: var(--primary);
+  background-color: #f0f7ff;
+  transform: translateX(4px);
+}
+
+.exam-option-card.selected {
+  border-color: var(--primary) !important;
+  background-color: #eff6ff !important;
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.15);
+}
+
+.exam-shortcut-key {
+  width: 26px;
+  height: 26px;
+  border-radius: 6px;
+  background-color: #e2e8f0;
+  color: #475569;
+  font-weight: 700;
+  font-size: 0.75rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.exam-option-card.selected .exam-shortcut-key {
+  background-color: var(--primary);
+  color: #ffffff;
+}
+
+.exam-scroll-area {
+  max-height: calc(100vh - 120px);
+  overflow-y: auto;
+}
+
+/* --------------------------------------------------------------------------
+   13. EXAM RESULT VIEW (ExamResultView.vue)
+   -------------------------------------------------------------------------- */
+.result-hero-card {
+  border-radius: 24px;
+  overflow: hidden;
+  box-shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.08);
+  transition: all 0.3s ease;
+}
+
+.result-card-passed {
+  background: linear-gradient(145deg, #ecfdf5 0%, #f0fdf4 50%, #ffffff 100%);
+  border: 2px solid #86efac;
+}
+
+.result-card-failed {
+  background: linear-gradient(145deg, #fef2f2 0%, #fff1f2 50%, #ffffff 100%);
+  border: 2px solid #fca5a5;
+}
+
+.result-badge-icon {
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 1.25rem;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+}
+
+.result-badge-icon.badge-passed {
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  color: #ffffff;
+}
+
+.result-badge-icon.badge-failed {
+  background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+  color: #ffffff;
+}
+
+.review-option-item {
+  border: 1.5px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 0.85rem 1rem;
+  background-color: #f8fafc;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.5rem;
+}
+
+.review-option-item.correct-ans {
+  border-color: #10b981 !important;
+  background-color: #ecfdf5 !important;
+  color: #065f46 !important;
+}
+
+.review-option-item.user-wrong-ans {
+  border-color: #ef4444 !important;
+  background-color: #fef2f2 !important;
+  color: #991b1b !important;
+}
