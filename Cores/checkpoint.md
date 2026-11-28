@@ -6,7 +6,7 @@
 > - `[/]` : Đang thực hiện (In Progress)  
 > - `[x]` : Đã hoàn thành (Done)  
 
-> **Cập nhật trạng thái hệ thống đến 2026-11-25:** `[/]` Các chức năng cốt lõi của học viên và quản trị đã được hiện thực: xác thực JWT, ngân hàng câu hỏi phân loại theo 7 chương, ôn tập theo nhóm hạng và giải thích, thi thử theo ma trận 9 hạng bằng, chấm điểm câu liệt, lịch sử/xem lại bài thi, tra cứu biển báo/mức phạt, Admin Dashboard và các màn hình quản trị. Học viên và admin nay chạy ở hai cổng frontend (`5173` và `5174`); trang admin mặc định là đăng nhập, không có đăng ký, và ngrok chỉ mở cổng học viên. Lối vào ôn tập chung toàn bộ 7 chương đã được gỡ; A/A1 vẫn ôn chương I–V, B/B1 và C/C1 ôn đủ 7 chương theo nhóm hạng. Cấu trúc chương vẫn được giữ vì cần cho ôn theo hạng, ma trận thi và quản trị ngân hàng. Các chức năng mở rộng hiện có gồm quên mật khẩu OTP email, nhận diện biển báo AI ResNet-50 và chatbot Gemini. Backend đã được chuẩn hóa theo `routes → controllers → services → models`. Thi thử vẫn chọn hạng cụ thể, lịch sử nhóm được lọc theo các hạng thành viên. Ngày 2026-11-25 đã vá lỗi upload giả ảnh có thể thực thi nội dung chủ động: kiểm tra chữ ký tệp, dùng phần mở rộng máy chủ quy định và sandbox phản hồi `/uploads` (CP-05.42 / SEC-01.3). Bản vá đã qua kiểm tra cú pháp backend, kiểm thử upload multipart (từ chối HTML giả ảnh và xóa tệp lỗi; ảnh được đặt đuôi `.png` do máy chủ tạo) cùng kiểm tra header CSP/nosniff. Các kiểm thử này chưa thay thế cho kiểm thử end-to-end trên CSDL/dịch vụ triển khai. Công việc tài liệu/demo còn lại cần theo dõi tại CP-05.6.
+> **Cập nhật trạng thái hệ thống đến 2026-11-26:** `[/]` Các chức năng cốt lõi của học viên và quản trị đã được hiện thực: xác thực JWT, OTP đăng ký/đặt lại mật khẩu, quản lý hồ sơ và avatar, ngân hàng câu hỏi phân loại theo 7 chương, ôn tập theo nhóm hạng, thi thử theo ma trận 6 hạng bằng A, A1, B, B1, C, C1, chấm điểm câu liệt, lịch sử/xem lại bài thi, tra cứu biển báo/mức phạt, nhận diện biển báo AI ResNet-50, chatbot Groq và các màn hình quản trị. Học viên và admin chạy ở hai cổng frontend riêng (`5173` và `5174`); trang admin mặc định là đăng nhập, không có đăng ký, và ngrok chỉ mở cổng học viên. Lối vào ôn tập chung toàn bộ 7 chương đã được gỡ; A/A1 vẫn ôn chương I–V, B/B1 và C/C1 ôn đủ 7 chương theo nhóm hạng. Backend đã được chuẩn hóa theo `routes → controllers → services → models`. Ngày 2026-11-25 đã vá lỗi upload giả ảnh có thể thực thi nội dung chủ động bằng kiểm tra chữ ký tệp, phần mở rộng do máy chủ quy định và CSP sandbox cho `/uploads` (CP-05.42 / SEC-01.3). Đợt rà soát bảo mật 2026-11-26 ghi nhận các hạng mục còn mở trong `fix_bao_mat.md`; các kiểm thử hiện tại chưa thay thế kiểm thử end-to-end trên cơ sở dữ liệu và dịch vụ triển khai. Công việc tài liệu/demo còn lại cần theo dõi tại CP-05.6.
 
 ---
 
@@ -18,7 +18,7 @@
 | **CP-02** | Dữ liệu 600 câu, Biển báo & Backend Exam Engine | 6 tasks | `[x]` Hoàn thành | 2026-10-18 |
 | **CP-03** | Frontend SPA: Ôn tập, Tra cứu & Phòng thi sát hạch | 7 tasks | `[x]` Hoàn thành | 2026-10-19 |
 | **CP-04** | Lịch sử thi của học viên & Phân hệ Admin Dashboard | 5 tasks | `[x]` Hoàn thành | 2026-10-19 |
-| **CP-05** | Kiểm thử tích hợp, Tối ưu hóa & Đóng gói đồ án | 33 tasks | `[/]` Đang hoàn thiện | Đang cập nhật đến 2026-11-25 |
+| **CP-05** | Kiểm thử tích hợp, Tối ưu hóa & Đóng gói đồ án | 42 tasks | `[/]` Đang hoàn thiện | Đang cập nhật đến 2026-11-26 |
 
 ---
 
@@ -33,7 +33,7 @@
 - [x] **CP-01.6:** Xây dựng Middleware xác thực Token JWT và Middleware kiểm tra quyền hạn Role (Student / Admin).
 
 ### CHECKPOINT 02: DỮ LIỆU CHUẨN & BACKEND EXAM ENGINE
-- [x] **CP-02.1:** Soạn thảo bộ dữ liệu mẫu/seed data: 7 chương lý thuyết, ma trận đề thi các hạng bằng (A, A1, B, B1, C, C1, D, D1, D2) và tạo các lớp OOP (`ChapterModel`, `LicenseTypeModel`, `ExamStructureRuleModel`).
+- [x] **CP-02.1:** Soạn thảo bộ dữ liệu mẫu/seed data: 7 chương lý thuyết, ma trận đề thi các hạng bằng (A, A1, B, B1, C, C1) và tạo các lớp OOP (`ChapterModel`, `LicenseTypeModel`, `ExamStructureRuleModel`).
 - [x] **CP-02.2:** Soạn thảo bộ seed data câu hỏi & đáp án (gắn chính xác cờ `is_paralysis = 1` cho các câu điểm liệt) và hoàn thiện các lớp OOP (`QuestionModel`, `AnswerModel`).
 - [x] **CP-02.3:** Nạp dữ liệu hệ thống biển báo đường bộ (53 biển báo đủ 5 nhóm chuẩn QCVN 41:2019) và danh mục mức phạt theo Nghị định 100/123 (35 hành vi vi phạm cho Xe máy, Ô tô, Khác) và hoàn thiện các lớp OOP (`TrafficSignModel`, `TrafficFineModel`).
 - [x] **CP-02.4:** Xây dựng nhóm API phục vụ Ôn tập & Tra cứu (`/api/v1/chapters`, `/api/v1/questions` có lọc và phân trang, `/api/v1/questions/paralysis`, `/api/v1/lookup/signs`, `/api/v1/lookup/fines`) theo chuẩn OOP (`ChapterService`, `ChapterController`, `QuestionService`, `QuestionController`, `LookupService`, `LookupController`).
@@ -61,7 +61,7 @@
 - [x] **CP-04.5:** Xây dựng màn hình Quản lý người dùng (`AdminUsersView.vue`): Danh sách tài khoản, khóa/mở khóa.
 
 ### CHECKPOINT 05: KIỂM THỬ TÍCH HỢP, TỐI ƯU & HOÀN THIỆN
-- [x] **CP-05.1:** Điều chỉnh dữ liệu và giao diện theo yêu cầu sửa dự án: đồng bộ bộ hạng bằng mới A, A1, B, B1, C, C1, D, D1, D2, cô lập giao diện học viên vs admin, đồng bộ theme riêng cho hai phân hệ.
+- [x] **CP-05.1:** Điều chỉnh dữ liệu và giao diện theo yêu cầu sửa dự án: đồng bộ bộ hạng bằng A, A1, B, B1, C, C1, cô lập giao diện học viên vs admin, đồng bộ theme riêng cho hai phân hệ.
 - [x] **CP-05.2:** Kiểm tra tính tương thích Responsive trên Desktop, Tablet và Mobile.
 - [x] **CP-05.3:** Đánh giá hiệu năng truy vấn CSDL, kiểm tra Indexing và tối ưu hóa thời gian phản hồi API.
 - [x] **CP-05.4:** Cập nhật tài liệu hướng dẫn bổ sung trong thư mục `Cores/` cho các thay đổi giao diện và cấu hình dữ liệu mới, bao gồm quy tắc: bỏ tùy chọn "Tất cả các chương" và hiển thị cảnh báo "Vui lòng chọn chương" khi chưa chọn chương nào.
@@ -108,11 +108,11 @@
   - Frontend: `SignRecognitionView.vue` (hiệu ứng quét radar/laser sinh động, responsive), route `/lookup/recognize`, thêm mục menu "Nhận diện biển báo AI" trên Navbar dropdown và nút CTA trên trang tra cứu biển báo `SignsView.vue`.
   - Build thành công: 135 modules, 598ms.
 - [x] **CP-05.15:** Sửa lỗi timeout chức năng Quên mật khẩu (ForgotPassword) — Backend gửi email OTP theo cơ chế **fire-and-forget** (non-blocking), API phản hồi tức thì (~0.09s thay vì chờ 6–13s trước đó). Tăng `timeout` của `apiClient` từ 10s lên 30s để xử lý các tác vụ dài hơn. Build frontend: 135 modules, 587ms.
-- [x] **CP-05.16:** Tích hợp chức năng **Chatbot hỏi đáp Luật Giao Thông AI** (`/lookup/chatbot`) sử dụng Google Gemini AI (`gemini-3.5-flash`):
+- [x] **CP-05.16:** Tích hợp chức năng **Chatbot hỏi đáp Luật Giao Thông AI** (`/lookup/chatbot`) sử dụng Groq Cloud API.
   - Giao diện chatbox hiện đại nằm trong menu "Tra cứu luật", hỗ trợ hội thoại đa lượt có nhớ ngữ cảnh (lưu lịch sử 20 lượt gần nhất mỗi session, tự xóa sau 30 phút không hoạt động).
-  - Phạm vi kiến thức: Luật Giao thông đường bộ, Nghị định 100/2019 & 123/2021 (mức phạt), QCVN 41:2019 (biển báo), 600 câu thi GPLX, quy trình sát hạch 9 hạng bằng. Tự động từ chối câu hỏi ngoài chủ đề giao thông.
+  - Phạm vi kiến thức: Luật Giao thông đường bộ, Nghị định 100/2019 & 123/2021 (mức phạt), QCVN 41:2019 (biển báo), 600 câu thi GPLX, quy trình sát hạch 6 hạng bằng A, A1, B, B1, C, C1. Tự động từ chối câu hỏi ngoài chủ đề giao thông.
   - Tính năng UI: Typing indicator 3 chấm nhảy, render Markdown (bold/italic/list/code), câu hỏi gợi ý nhanh, nút Làm mới hội thoại, đếm ký tự, phím tắt Enter gửi / Shift+Enter xuống dòng, responsive mobile.
-  - Backend: `chatbot.service.js` (Singleton + session Map in-memory), `chatbot.controller.js`, `chatbot.routes.js`, route `POST /api/v1/chatbot/send` và `POST /api/v1/chatbot/clear`. `GEMINI_API_KEY` cấu hình trong `.env`.
+  - Backend: `chatbot.service.js` (Singleton + session Map in-memory), `chatbot.controller.js`, `chatbot.routes.js`, route `POST /api/v1/chatbot/send` và `POST /api/v1/chatbot/clear`. `GROQ_API_KEY` và `GROQ_MODEL` cấu hình trong `.env`.
   - Frontend: `ChatbotView.vue`, route `/lookup/chatbot`, mục menu "Hỏi đáp AI" (badge Mới) trong Navbar dropdown "Tra cứu luật".
   - Test OK: Câu hỏi on-topic (vượt đèn đỏ, biển P.102), context memory nhiều lượt, off-topic rejection (nấu ăn), xóa session. Build thành công: 136 modules, 614ms.
 - [x] **CP-05.17:** Khắc phục lỗi nhận diện biển báo qua Camera bị từ chối `request entity too large`:
@@ -160,7 +160,7 @@
   - Hoàn thành viết mã nguồn DDL [schema.sql](file:///d:/Download/CT466_NLN/backend/database/schema.sql) tạo 12 bảng chuẩn hóa và dữ liệu seed ban đầu (7 chương, 6 hạng bằng, tài khoản admin).
   - Cấu hình file `backend/.env` và sửa scripts khởi chạy server trong `backend/package.json`.
   - Hoàn thành toàn bộ **Checkpoint 01**: Xây dựng module Xác thực JWT (`auth.service.js`, `auth.controller.js`, `auth.routes.js`), băm mật khẩu `bcryptjs`, xác thực token qua `auth.middleware.js` và phân quyền vai trò `rbac.middleware.js`.
-  - Hoàn thành **CP-02.1**: Nạp file seed `database/seeds/01_license_and_matrix.sql` (7 chương, 9 hạng bằng A, A1, B, B1, C, C1, D, D1, D2, ma trận `exam_structure_rules` chuẩn Bộ GTVT) và hoàn thiện 3 lớp OOP: `ChapterModel`, `LicenseTypeModel`, `ExamStructureRuleModel`.
+  - Hoàn thành **CP-02.1**: Nạp file seed `database/seeds/01_license_and_matrix.sql` (7 chương, 6 hạng bằng A, A1, B, B1, C, C1, ma trận `exam_structure_rules` chuẩn Bộ GTVT) và hoàn thiện 3 lớp OOP: `ChapterModel`, `LicenseTypeModel`, `ExamStructureRuleModel`.
   - Hoàn thành **CP-02.2**: Nạp bộ dữ liệu câu hỏi và đáp án vào CSDL MySQL (gắn cờ chính xác các câu hỏi điểm liệt `is_paralysis = 1`, lời giải thích chi tiết, đường dẫn ảnh) và hoàn thiện 2 lớp OOP: `QuestionModel`, `AnswerModel`.
 - **2026-10-19:**
   - Hoàn thành toàn bộ **Checkpoint 03**: Ôn tập 600 câu (`StudyView.vue`), 60 câu điểm liệt (`ParalysisView.vue`), tra cứu biển báo & mức phạt (`SignsView.vue`, `FinesView.vue`), phòng thi sát hạch (`ExamRoomView.vue`) và kết quả thi (`ExamResultView.vue`).
@@ -176,7 +176,7 @@
   - Khắc phục sự cố xung đột chính sách bảo mật CORP của `helmet` trong [`backend/src/app.js`](file:///d:/Download/CT466_NLN/backend/src/app.js) (`crossOriginResourcePolicy: { policy: 'cross-origin' }`), cho phép Frontend nhúng ảnh tĩnh tải lên từ thư mục `/uploads/` mà không bị trình duyệt chặn cross-origin.
   - Tích hợp cơ chế fallback icon thông minh trên Vue (`AdminSignsView.vue`, `SignsView.vue`) khi ảnh ngoài bị lỗi 404 hoặc mất kết nối.
   - Bổ sung `Prompt 12`, `Prompt 13` và cập nhật nguyên tắc bảo toàn dữ liệu bảng mã UTF-8 & tài sản tĩnh vào sổ tay điều phối AI [`Cores/prompt.md`](file:///d:/Download/CT466_NLN/Cores/prompt.md).
-  - Cập nhật chuẩn hóa dữ liệu 9 hạng giấy phép lái xe mới (A, A1, B, B1, C, C1, D, D1, D2) kèm ma trận 63 quy tắc phân bổ đề thi vào CSDL.
+  - Cập nhật chuẩn hóa dữ liệu 6 hạng giấy phép lái xe (A, A1, B, B1, C, C1) kèm ma trận phân bổ đề thi vào CSDL.
   - Tinh chỉnh giao diện Phòng thi sát hạch (`ExamRoomView.vue`): sửa lỗi tràn danh sách câu hỏi bên phải (palette grid 5 cột) và tăng độ tương phản màu chữ.
   - **[ĐÃ KHẮC PHỤC TRIỆT ĐỂ SỰ CỐ LOADING LOOP]**: Màn hình phòng thi sát hạch (`/exam/room/:id`) hoạt động trơn tru. Đã xử lý xung đột Vue Router transition và dynamic params, thêm fallback nút tải lại và cơ chế Teleport portal an toàn.
 - **2026-11-03:**
@@ -215,11 +215,11 @@
     - Giao diện `SignRecognitionView.vue`, route `/lookup/recognize`, menu dropdown Navbar & nút CTA tại `SignsView.vue`.
     - Build thành công: 135 modules, 598ms.
 - [x] **CP-05.15:** Sửa lỗi timeout chức năng Quên mật khẩu (ForgotPassword) — Backend gửi email OTP theo cơ chế **fire-and-forget** (non-blocking), API phản hồi tức thì (~0.09s thay vì chờ 6–13s trước đó). Tăng `timeout` của `apiClient` từ 10s lên 30s để xử lý các tác vụ dài hơn. Build frontend: 135 modules, 587ms.
-- [x] **CP-05.16:** Tích hợp chức năng **Chatbot hỏi đáp Luật Giao Thông AI** (`/lookup/chatbot`) sử dụng Google Gemini AI (`gemini-3.5-flash`):
+- [x] **CP-05.16:** Tích hợp chức năng **Chatbot hỏi đáp Luật Giao Thông AI** (`/lookup/chatbot`) sử dụng Groq Cloud API:
   - Giao diện chatbox hiện đại nằm trong menu "Tra cứu luật", hỗ trợ hội thoại đa lượt có nhớ ngữ cảnh (lưu lịch sử 20 lượt gần nhất mỗi session, tự xóa sau 30 phút không hoạt động).
-  - Phạm vi kiến thức: Luật Giao thông đường bộ, Nghị định 100/2019 & 123/2021 (mức phạt), QCVN 41:2019 (biển báo), 600 câu thi GPLX, quy trình sát hạch 9 hạng bằng. Tự động từ chối câu hỏi ngoài chủ đề giao thông.
+  - Phạm vi kiến thức: Luật Giao thông đường bộ, Nghị định 100/2019 & 123/2021 (mức phạt), QCVN 41:2019 (biển báo), 600 câu thi GPLX, quy trình sát hạch 6 hạng bằng A, A1, B, B1, C, C1. Tự động từ chối câu hỏi ngoài chủ đề giao thông.
   - Tính năng UI: Typing indicator 3 chấm nhảy, render Markdown (bold/italic/list/code), câu hỏi gợi ý nhanh, nút Làm mới hội thoại, đếm ký tự, phím tắt Enter gửi / Shift+Enter xuống dòng, responsive mobile.
-  - Backend: `chatbot.service.js` (Singleton + session Map in-memory), `chatbot.controller.js`, `chatbot.routes.js`, route `POST /api/v1/chatbot/send` và `POST /api/v1/chatbot/clear`. `GEMINI_API_KEY` cấu hình trong `.env`.
+  - Backend: `chatbot.service.js` (Singleton + session Map in-memory), `chatbot.controller.js`, `chatbot.routes.js`, route `POST /api/v1/chatbot/send` và `POST /api/v1/chatbot/clear`. `GROQ_API_KEY` cấu hình trong `.env`.
   - Frontend: `ChatbotView.vue`, route `/lookup/chatbot`, mục menu "Hỏi đáp AI" (badge Mới) trong Navbar dropdown "Tra cứu luật".
   - Test OK: Câu hỏi on-topic (vượt đèn đỏ, biển P.102), context memory nhiều lượt, off-topic rejection (nấu ăn), xóa session. Build thành công: 136 modules, 614ms.
   - Hoàn thành **CP-05.13**: Chức năng Quên mật khẩu / Đặt lại mật khẩu qua email OTP.
@@ -229,8 +229,8 @@
     - Frontend: `ForgotPasswordView.vue` tích hợp `apiClient` Axios chuẩn (kết nối trực tiếp Backend `http://localhost:5000/api/v1`), giao diện 3 bước mượt mà kèm đếm ngược 3 phút và nhập OTP 6 ô tự động focus/paste.
     - Build thành công: 133 modules, 582ms.
   - Hoàn thành **CP-05.15**: Sửa lỗi timeout ForgotPassword — email gửi non-blocking, API phản hồi tức thì.
-  - Hoàn thành **CP-05.16**: Chatbot hỏi đáp Luật Giao Thông AI (Google Gemini `gemini-3.5-flash`).
-    - Backend: `chatbot.service.js`, `chatbot.controller.js`, `chatbot.routes.js`, GEMINI_API_KEY trong `.env`.
+  - Hoàn thành **CP-05.16**: Chatbot hỏi đáp Luật Giao Thông AI (Groq `openai/gpt-oss-120b`).
+    - Backend: `chatbot.service.js`, `chatbot.controller.js`, `chatbot.routes.js`, `GROQ_API_KEY` trong `.env`.
     - Frontend: `ChatbotView.vue`, route `/lookup/chatbot`, mục menu "Hỏi đáp AI" trong Navbar.
     - Build thành công: 136 modules, 614ms.
 - **2026-11-04:**

@@ -9,10 +9,10 @@
 
 ## 1. MỤC TIÊU VÀ PHẠM VI DỰ ÁN (SCOPE OF WORK)
 
-> **Trạng thái triển khai đến 2026-11-09:** Các phân hệ ôn tập theo nhóm hạng, thi thử, lịch sử, tra cứu và các màn hình quản trị chính đã có trong mã nguồn. Học viên và admin chạy trên hai cổng frontend riêng (`5173` và `5174`); trang admin mặc định là đăng nhập và không có mục đăng ký, ngrok chỉ chia sẻ cổng học viên. Lối vào ôn tập chung toàn bộ 7 chương đã được gỡ; A/A1 gồm chương I–V, B/B1 và C/C1 gồm đủ 7 chương. Dữ liệu chương vẫn được giữ để phục vụ ôn theo nhóm, ma trận thi và quản trị. Bảng yêu cầu bên dưới vẫn là đặc tả nghiệm thu; trạng thái từng mốc triển khai được theo dõi tại `Cores/checkpoint.md`. Build/cú pháp thành công không đồng nghĩa đã kiểm thử end-to-end toàn bộ môi trường triển khai.
+> **Trạng thái triển khai đến 2026-11-26:** Các phân hệ ôn tập theo nhóm hạng, thi thử, lịch sử, tra cứu, OTP, hồ sơ/avatar, nhận diện biển báo AI, chatbot và quản trị đã có trong mã nguồn. Học viên và admin chạy trên hai cổng frontend riêng (`5173` và `5174`); trang admin mặc định là đăng nhập và không có mục đăng ký, ngrok chỉ chia sẻ cổng học viên. Lối vào ôn tập chung toàn bộ 7 chương đã được gỡ; A/A1 gồm chương I–V, B/B1 và C/C1 gồm đủ 7 chương. Bảng yêu cầu bên dưới vẫn là đặc tả nghiệm thu; trạng thái từng mốc được theo dõi tại `Cores/checkpoint.md` và các hạng mục bảo mật còn mở tại `Cores/fix_bao_mat.md`. Build/cú pháp thành công không đồng nghĩa đã kiểm thử end-to-end toàn bộ môi trường triển khai.
 
 ### 1.1. Mục tiêu chung
-Xây dựng một hệ thống phần mềm web hoàn chỉnh hỗ trợ người học ôn luyện lý thuyết 600 câu hỏi và thi thử sát hạch giấy phép lái xe (GPLX) các hạng (A, A1, B, B1, C, C1, D, D1, D2) theo đúng chuẩn quy định của Bộ Giao thông Vận tải và Tổng cục Đường bộ Việt Nam.
+Xây dựng một hệ thống phần mềm web hoàn chỉnh hỗ trợ người học ôn luyện lý thuyết 600 câu hỏi và thi thử sát hạch giấy phép lái xe (GPLX) các hạng (A, A1, B, B1, C, C1) theo đúng chuẩn quy định của Bộ Giao thông Vận tải và Tổng cục Đường bộ Việt Nam.
 
 ### 1.2. Đối tượng phục vụ
 - **Học viên:** Người có nhu cầu ôn thi bằng lái xe, tra cứu biển báo và quy định mức phạt vi phạm giao thông.
@@ -65,9 +65,6 @@ Xây dựng một hệ thống phần mềm web hoàn chỉnh hỗ trợ ngườ
   - **Hạng B1:** 30 câu - 20 phút - Đạt 27/30 - Không sai câu điểm liệt.
   - **Hạng C:** 40 câu - 24 phút - Đạt 36/40 - Không sai câu điểm liệt.
   - **Hạng C1:** 40 câu - 24 phút - Đạt 36/40 - Không sai câu điểm liệt.
-  - **Hạng D:** 45 câu - 26 phút - Đạt 41/45 - Không sai câu điểm liệt.
-  - **Hạng D1:** 45 câu - 26 phút - Đạt 41/45 - Không sai câu điểm liệt.
-  - **Hạng D2:** 45 câu - 26 phút - Đạt 41/45 - Không sai câu điểm liệt.
 - [ ] **Thuật toán sinh đề ma trận:** Bốc ngẫu nhiên câu hỏi phân bổ đúng tỉ lệ theo từng chương, bắt buộc có đúng số lượng câu điểm liệt theo quy định.
 - [ ] **Bảo mật thi cử:** Client tuyệt đối không nhận trường `is_correct` trong lúc đang thi.
 - [ ] **Đồng hồ đếm ngược:** Đếm ngược thời gian thực, tự động thu bài và chấm điểm khi hết giờ (`00:00`).

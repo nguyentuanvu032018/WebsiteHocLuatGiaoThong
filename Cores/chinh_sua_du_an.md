@@ -2,7 +2,7 @@
 
 Đã xử lý các mục sau trong dự án:
 
-    - Cập nhật hệ thống hạng bằng lái xe về bộ danh mục chuẩn mới: A, A1, B, B1, C, C1, D, D1, D2; loại bỏ các hạng cũ không còn phù hợp với yêu cầu dự án và đồng bộ dữ liệu từ frontend/backend.
+    - Cập nhật hệ thống hạng bằng lái xe theo bộ danh mục dự án: A, A1, B, B1, C, C1; đồng bộ dữ liệu từ frontend/backend.
     - Tách cổng học viên và cổng admin thành hai địa chỉ chạy riêng; đăng nhập tại từng cổng theo đúng vai trò, trang admin không có mục đăng ký.
     - Tái cấu hình phong cách giao diện admin và học viên theo hai chủ đề khác biệt; ưu tiên Bootstrap và tách theme CSS riêng cho từng giao diện.
     - Chuyển các hiệu ứng riêng cho giao diện học viên và admin vào hai file CSS riêng để dễ bảo trì và đồng bộ hình ảnh mẫu.

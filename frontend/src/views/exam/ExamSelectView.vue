@@ -109,10 +109,6 @@ const getLicenseIcon = (code) => {
     case 'C':
     case 'C1':
       return 'bi-truck text-warning';
-    case 'D':
-    case 'D1':
-    case 'D2':
-      return 'bi-bus-front-fill text-info';
     default:
       return 'bi-speedometer text-secondary';
   }

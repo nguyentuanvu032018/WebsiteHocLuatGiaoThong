@@ -7,7 +7,8 @@
 > **Mô hình lập trình:** Hướng đối tượng (OOP: Model - Service - Controller)  
 > **Hệ quản trị CSDL:** MySQL 8.0 (InnoDB, UTF8mb4)
 
-### Tổ chức cổng giao diện (2026-11-09)
+### Tổ chức cổng giao diện (2026-11-26)
+
 - Cổng học viên và cổng quản trị dùng chung mã nguồn frontend nhưng chạy hai Vite dev server độc lập: học viên `http://localhost:5173`, quản trị `http://localhost:5174`.
 - Cổng quản trị mặc định mở đăng nhập, không cung cấp đăng ký; các route quản trị vẫn được bảo vệ bằng JWT/RBAC ở frontend và backend.
 - Khi chia sẻ demo bằng ngrok, chỉ mở cổng học viên; cổng quản trị chỉ bind vào loopback.
@@ -19,7 +20,8 @@
 - **Services:** Thực hiện nghiệp vụ, kiểm tra đầu vào/quyền thao tác và phối hợp các Model; không viết SQL.
 - **Models:** Chịu trách nhiệm truy vấn và cập nhật dữ liệu MySQL.
 
-### Trạng thái nghiệp vụ học theo nhóm GPLX (2026-11-08)
+### Trạng thái nghiệp vụ học theo nhóm GPLX (2026-11-26)
+
 - Phạm vi này được cấu hình ở Frontend, không thêm bảng hay thay đổi ERD: A/A1 lọc theo thứ tự chương I–V; B/B1 và C/C1 dùng đủ 7 chương.
 - Thi thử vẫn gắn với một `license_type_id` cụ thể và lấy ma trận từ `exam_structure_rules`; lịch sử nhóm lọc nhiều `license_type_id` qua API lịch sử.
 - Chi tiết tiến độ và mức kiểm thử hiện tại được ghi trong `Cores/checkpoint.md`.
@@ -29,6 +31,8 @@
 ## PHẦN 1: LƯỢC ĐỒ CƠ SỞ DỮ LIỆU (DATABASE SCHEMA)
 
 ### 1.1. Sơ đồ Quan hệ Thực thể (Entity Relationship Diagram - ERD)
+
+> **Phạm vi lược đồ:** Hai file `backend/database/schema.sql` và `backend/database/seeds/schema.sql` khởi tạo cấu trúc 12 bảng cơ sở. Mã backend hiện còn sử dụng hai cột `users.avatar` và `users.token_version`; các cột này được bổ sung lần lượt bởi `backend/src/scripts/migrate_avatar.js` và `backend/src/scripts/migrate_token_version.js`. ERD và từ điển dữ liệu dưới đây mô tả cấu trúc sau khi áp dụng các migration này.
 
 ```mermaid
 erDiagram
@@ -52,13 +56,14 @@ erDiagram
         string avatar "URL/đường dẫn ảnh đại diện, NULL hiển thị chữ cái đầu"
         enum role "student, admin"
         boolean is_active
+        int token_version "NOT NULL, DEFAULT 1"
         datetime created_at
         datetime updated_at
     }
 
     LICENSE_TYPES {// lớp hạng giấy phép lái xe, cấu hình thông tin và yêu cầu thi
         int id PK
-        string code UK "A, A1, B, B1, C, C1, D, D1, D2"
+        string code UK "A, A1, B, B1, C, C1"
         string name
         int total_questions
         int duration_minutes
@@ -168,108 +173,164 @@ erDiagram
 
 #### Bảng 1: `users` (Người dùng & Phân quyền)
 
-| Tên cột         | Kiểu dữ liệu             | Ràng buộc                   | Mô tả                                                       |
-| :-------------- | :----------------------- | :-------------------------- | :---------------------------------------------------------- |
-| `id`            | INT                      | PK, AUTO_INCREMENT          | Mã định danh người dùng duy nhất                            |
-| `full_name`     | VARCHAR(100)             | NOT NULL                    | Họ và tên thí sinh / quản trị viên                          |
-| `email`         | VARCHAR(150)             | NOT NULL, UNIQUE            | Email đăng nhập hệ thống                                    |
-| `password_hash` | VARCHAR(255)             | NOT NULL                    | Mật khẩu mã hóa băm bằng bcrypt                             |
-| `phone`         | VARCHAR(20)              | NULL                        | Số điện thoại liên hệ                                       |
-| `avatar`        | VARCHAR(255)             | NULL                        | Đường dẫn ảnh đại diện (mặc định NULL hiển thị chữ cái đầu) |
-| `role`          | ENUM('student', 'admin') | DEFAULT 'student'           | Vai trò: `student` (học viên), `admin` (quản trị)           |
-| `is_active`     | TINYINT(1)               | DEFAULT 1                   | 1: Hoạt động, 0: Bị khóa                                    |
-| `token_version` | INT                      | NOT NULL, DEFAULT 1         | Phiên bản JWT Token (tăng khi đổi mật khẩu/khóa để thu hồi) |
-| `created_at`    | TIMESTAMP                | DEFAULT CURRENT_TIMESTAMP   | Thời điểm tạo tài khoản                                     |
-| `updated_at`    | TIMESTAMP                | ON UPDATE CURRENT_TIMESTAMP | Thời điểm cập nhật gần nhất                                 |
+| Tên cột         | Kiểu dữ liệu             | Ràng buộc                                              | Mô tả                                                       |
+| :-------------- | :----------------------- | :----------------------------------------------------- | :---------------------------------------------------------- |
+| `id`            | INT                      | PK, AUTO_INCREMENT                                     | Mã định danh người dùng duy nhất                            |
+| `full_name`     | VARCHAR(100)             | NOT NULL                                               | Họ và tên thí sinh / quản trị viên                          |
+| `email`         | VARCHAR(150)             | NOT NULL, UNIQUE                                       | Email đăng nhập hệ thống                                    |
+| `password_hash` | VARCHAR(255)             | NOT NULL                                               | Mật khẩu mã hóa băm bằng bcrypt                             |
+| `phone`         | VARCHAR(20)              | NULL                                                   | Số điện thoại liên hệ                                       |
+| `avatar`        | VARCHAR(255)             | NULL                                                   | Đường dẫn ảnh đại diện (mặc định NULL hiển thị chữ cái đầu) |
+| `role`          | ENUM('student', 'admin') | NOT NULL, DEFAULT 'student'                            | Vai trò: `student` (học viên), `admin` (quản trị)           |
+| `is_active`     | TINYINT(1)               | NOT NULL, DEFAULT 1                                    | 1: Hoạt động, 0: Bị khóa                                    |
+| `token_version` | INT                      | NOT NULL, DEFAULT 1                                    | Phiên bản JWT Token (tăng khi đổi mật khẩu/khóa để thu hồi) |
+| `created_at`    | TIMESTAMP                | DEFAULT CURRENT_TIMESTAMP                              | Thời điểm tạo tài khoản                                     |
+| `updated_at`    | TIMESTAMP                | DEFAULT CURRENT_TIMESTAMP, ON UPDATE CURRENT_TIMESTAMP | Thời điểm cập nhật gần nhất                                 |
 
-#### Bảng 2: `license_types` (Hạng giấy phép lái xe)
+Các index của bảng: UNIQUE trên `email`, index trên `email` (`idx_user_email`) và `role` (`idx_user_role`).
 
-| Tên cột            | Kiểu dữ liệu | Ràng buộc          | Mô tả                                             |
-| :----------------- | :----------- | :----------------- | :------------------------------------------------ |
-| `id`               | INT          | PK, AUTO_INCREMENT | Mã định danh hạng bằng                            |
-| `code`             | VARCHAR(10)  | NOT NULL, UNIQUE   | Ký hiệu hạng bằng: A, A1, B, B1, C, C1, D, D1, D2 |
-| `name`             | VARCHAR(100) | NOT NULL           | Tên đầy đủ (VD: Hạng B1 - Ôtô số tự động...)      |
-| `total_questions`  | INT          | NOT NULL           | Tổng số câu hỏi trong 1 đề thi sát hạch           |
-| `duration_minutes` | INT          | NOT NULL           | Thời gian thi tính bằng phút                      |
-| `passing_score`    | INT          | NOT NULL           | Số câu đúng tối thiểu cần đạt để thi đỗ           |
-| `description`      | TEXT         | NULL               | Phạm vi điều khiển phương tiện của hạng bằng      |
-| `is_active`        | TINYINT(1)   | DEFAULT 1          | Trạng thái áp dụng thi                            |
+#### Bảng 2: `license_types` (Hạng giấy phép và cấu hình phòng thi)
+
+Trong giao diện quản trị, mỗi cấu hình hạng giấy phép được hiển thị như một phòng thi sát hạch. Bảng này lưu thông số đề thi; lượt làm bài cụ thể được lưu riêng trong `exam_sessions`.
+
+| Tên cột            | Kiểu dữ liệu | Ràng buộc                 | Mô tả                                        |
+| :----------------- | :----------- | :------------------------ | :------------------------------------------- |
+| `id`               | INT          | PK, AUTO_INCREMENT        | Mã định danh hạng bằng                       |
+| `code`             | VARCHAR(10)  | NOT NULL, UNIQUE          | Ký hiệu hạng bằng: A, A1, B, B1, C, C1       |
+| `name`             | VARCHAR(100) | NOT NULL                  | Tên đầy đủ (VD: Hạng B1 - Ôtô số tự động...) |
+| `total_questions`  | INT          | NOT NULL                  | Tổng số câu hỏi trong 1 đề thi sát hạch      |
+| `duration_minutes` | INT          | NOT NULL                  | Thời gian thi tính bằng phút                 |
+| `passing_score`    | INT          | NOT NULL                  | Số câu đúng tối thiểu cần đạt để thi đỗ      |
+| `description`      | TEXT         | NULL                      | Phạm vi điều khiển phương tiện của hạng bằng |
+| `is_active`        | TINYINT(1)   | NOT NULL, DEFAULT 1       | Trạng thái áp dụng thi                       |
+| `created_at`       | TIMESTAMP    | DEFAULT CURRENT_TIMESTAMP | Thời điểm tạo cấu hình hạng bằng             |
 
 #### Bảng 3: `chapters` (Chương lý thuyết 600 câu)
 
-| Tên cột        | Kiểu dữ liệu | Ràng buộc          | Mô tả                                   |
-| :------------- | :----------- | :----------------- | :-------------------------------------- |
-| `id`           | INT          | PK, AUTO_INCREMENT | Mã định danh chương                     |
-| `title`        | VARCHAR(255) | NOT NULL           | Tên chương (Chương I đến Chương VII)    |
-| `description`  | TEXT         | NULL               | Tóm tắt nội dung kiến thức trong chương |
-| `order_number` | INT          | DEFAULT 1          | Thứ tự hiển thị                         |
+| Tên cột        | Kiểu dữ liệu | Ràng buộc                 | Mô tả                                   |
+| :------------- | :----------- | :------------------------ | :-------------------------------------- |
+| `id`           | INT          | PK, AUTO_INCREMENT        | Mã định danh chương                     |
+| `title`        | VARCHAR(255) | NOT NULL                  | Tên chương (Chương I đến Chương VII)    |
+| `description`  | TEXT         | NULL                      | Tóm tắt nội dung kiến thức trong chương |
+| `order_number` | INT          | NOT NULL, DEFAULT 1       | Thứ tự hiển thị                         |
+| `created_at`   | TIMESTAMP    | DEFAULT CURRENT_TIMESTAMP | Thời điểm tạo chương                    |
 
 #### Bảng 4: `questions` (Ngân hàng câu hỏi sát hạch)
 
-| Tên cột        | Kiểu dữ liệu | Ràng buộc                       | Mô tả                                         |
-| :------------- | :----------- | :------------------------------ | :-------------------------------------------- |
-| `id`           | INT          | PK, AUTO_INCREMENT              | Mã định danh câu hỏi                          |
-| `chapter_id`   | INT          | FK $\rightarrow$ `chapters(id)` | Thuộc chương nào trong giáo trình             |
-| `content`      | TEXT         | NOT NULL                        | Nội dung câu hỏi trắc nghiệm                  |
-| `image_url`    | VARCHAR(255) | NULL                            | Đường dẫn ảnh sa hình / biển báo minh họa     |
-| `is_paralysis` | TINYINT(1)   | DEFAULT 0                       | 1: Câu hỏi điểm liệt (sai là trượt trực tiếp) |
-| `explanation`  | TEXT         | NULL                            | Lời giải thích luật và mẹo ghi nhớ đáp án     |
-| `is_active`    | TINYINT(1)   | DEFAULT 1                       | 1: Đang sử dụng trong ngân hàng đề            |
+| Tên cột        | Kiểu dữ liệu | Ràng buộc                                              | Mô tả                                         |
+| :------------- | :----------- | :----------------------------------------------------- | :-------------------------------------------- |
+| `id`           | INT          | PK, AUTO_INCREMENT                                     | Mã định danh câu hỏi                          |
+| `chapter_id`   | INT          | NOT NULL, FK $\rightarrow$ `chapters(id)`              | Thuộc chương nào trong giáo trình             |
+| `content`      | TEXT         | NOT NULL                                               | Nội dung câu hỏi trắc nghiệm                  |
+| `image_url`    | VARCHAR(255) | NULL                                                   | Đường dẫn ảnh sa hình / biển báo minh họa     |
+| `is_paralysis` | TINYINT(1)   | NOT NULL, DEFAULT 0                                    | 1: Câu hỏi điểm liệt (sai là trượt trực tiếp) |
+| `explanation`  | TEXT         | NULL                                                   | Lời giải thích luật và mẹo ghi nhớ đáp án     |
+| `is_active`    | TINYINT(1)   | NOT NULL, DEFAULT 1                                    | 1: Đang sử dụng trong ngân hàng đề            |
+| `created_at`   | TIMESTAMP    | DEFAULT CURRENT_TIMESTAMP                              | Thời điểm tạo câu hỏi                         |
+| `updated_at`   | TIMESTAMP    | DEFAULT CURRENT_TIMESTAMP, ON UPDATE CURRENT_TIMESTAMP | Thời điểm cập nhật câu hỏi gần nhất           |
+
+Bảng có khóa ngoại `chapter_id` tham chiếu `chapters(id)` với `ON DELETE RESTRICT`; có index trên `chapter_id` và `is_paralysis`.
 
 #### Bảng 5: `answers` (Phương án trả lời)
 
-| Tên cột        | Kiểu dữ liệu | Ràng buộc                        | Mô tả                                  |
-| :------------- | :----------- | :------------------------------- | :------------------------------------- |
-| `id`           | INT          | PK, AUTO_INCREMENT               | Mã định danh phương án                 |
-| `question_id`  | INT          | FK $\rightarrow$ `questions(id)` | Thuộc câu hỏi nào (ON DELETE CASCADE)  |
-| `answer_text`  | TEXT         | NOT NULL                         | Nội dung phương án trả lời             |
-| `is_correct`   | TINYINT(1)   | DEFAULT 0                        | 1: Phương án đúng, 0: Phương án sai    |
-| `order_number` | INT          | DEFAULT 1                        | Thứ tự hiển thị phương án (1, 2, 3, 4) |
+| Tên cột        | Kiểu dữ liệu | Ràng buộc                                  | Mô tả                                  |
+| :------------- | :----------- | :----------------------------------------- | :------------------------------------- |
+| `id`           | INT          | PK, AUTO_INCREMENT                         | Mã định danh phương án                 |
+| `question_id`  | INT          | NOT NULL, FK $\rightarrow$ `questions(id)` | Thuộc câu hỏi nào (ON DELETE CASCADE)  |
+| `answer_text`  | TEXT         | NOT NULL                                   | Nội dung phương án trả lời             |
+| `is_correct`   | TINYINT(1)   | NOT NULL, DEFAULT 0                        | 1: Phương án đúng, 0: Phương án sai    |
+| `order_number` | INT          | NOT NULL, DEFAULT 1                        | Thứ tự hiển thị phương án (1, 2, 3, 4) |
+
+Bảng có khóa ngoại `question_id` tham chiếu `questions(id)` với `ON DELETE CASCADE`; có index trên `question_id` và `is_correct`.
 
 #### Bảng 6: `exam_structure_rules` (Ma trận cấu hình đề thi theo Bộ GTVT)
 
-| Tên cột           | Kiểu dữ liệu | Ràng buộc                            | Mô tả                                       |
-| :---------------- | :----------- | :----------------------------------- | :------------------------------------------ |
-| `id`              | INT          | PK, AUTO_INCREMENT                   | Mã quy tắc ma trận                          |
-| `license_type_id` | INT          | FK $\rightarrow$ `license_types(id)` | Áp dụng cho hạng bằng nào                   |
-| `chapter_id`      | INT          | FK $\rightarrow$ `chapters(id)`      | Lấy câu hỏi từ chương nào                   |
-| `question_count`  | INT          | DEFAULT 0                            | Số lượng câu hỏi lấy từ chương này          |
-| `paralysis_count` | INT          | DEFAULT 0                            | Số câu điểm liệt bắt buộc lấy từ chương này |
+| Tên cột           | Kiểu dữ liệu | Ràng buộc                                                        | Mô tả                              |
+| :---------------- | :----------- | :--------------------------------------------------------------- | :--------------------------------- |
+| `id`              | INT          | PK, AUTO_INCREMENT                                               | Mã quy tắc ma trận                 |
+| `license_type_id` | INT          | NOT NULL, FK $\rightarrow$ `license_types(id)` ON DELETE CASCADE | Áp dụng cho hạng bằng nào          |
+| `chapter_id`      | INT          | NOT NULL, FK $\rightarrow$ `chapters(id)` ON DELETE CASCADE      | Lấy câu hỏi từ chương nào          |
+| `question_count`  | INT          | NOT NULL, DEFAULT 0                                              | Số câu thường lấy từ chương này    |
+| `paralysis_count` | INT          | NOT NULL, DEFAULT 0                                              | Số câu điểm liệt lấy từ chương này |
+
+Bảng có UNIQUE KEY trên cặp (`license_type_id`, `chapter_id`) để mỗi hạng bằng chỉ có một cấu hình cho mỗi chương.
 
 #### Bảng 7: `exam_sessions` (Lượt thi của học viên)
 
-| Tên cột                | Kiểu dữ liệu | Ràng buộc                            | Mô tả                                     |
-| :--------------------- | :----------- | :----------------------------------- | :---------------------------------------- |
-| `id`                   | INT          | PK, AUTO_INCREMENT                   | Mã phiên thi                              |
-| `user_id`              | INT          | FK $\rightarrow$ `users(id)`         | Học viên thực hiện bài thi                |
-| `license_type_id`      | INT          | FK $\rightarrow$ `license_types(id)` | Hạng bằng tham gia thi                    |
-| `score`                | INT          | DEFAULT 0                            | Tổng số câu trả lời đúng                  |
-| `total_questions`      | INT          | NOT NULL                             | Tổng số câu trong đề thi                  |
-| `has_paralysis_failed` | TINYINT(1)   | DEFAULT 0                            | 1: Bị đánh trượt do sai câu hỏi điểm liệt |
-| `is_passed`            | TINYINT(1)   | DEFAULT 0                            | 1: ĐẠT, 0: KHÔNG ĐẠT                      |
-| `time_spent_seconds`   | INT          | DEFAULT 0                            | Thời gian hoàn thành bài thi (giây)       |
-| `started_at`           | TIMESTAMP    | DEFAULT CURRENT_TIMESTAMP            | Thời điểm phát đề thi                     |
-| `submitted_at`         | TIMESTAMP    | NULL                                 | Thời điểm nộp bài thi                     |
+| Tên cột                | Kiểu dữ liệu | Ràng buộc                                                         | Mô tả                                     |
+| :--------------------- | :----------- | :---------------------------------------------------------------- | :---------------------------------------- |
+| `id`                   | INT          | PK, AUTO_INCREMENT                                                | Mã phiên thi                              |
+| `user_id`              | INT          | NOT NULL, FK $\rightarrow$ `users(id)` ON DELETE CASCADE          | Học viên thực hiện bài thi                |
+| `license_type_id`      | INT          | NOT NULL, FK $\rightarrow$ `license_types(id)` ON DELETE RESTRICT | Hạng bằng tham gia thi                    |
+| `score`                | INT          | NOT NULL, DEFAULT 0                                               | Tổng số câu trả lời đúng                  |
+| `total_questions`      | INT          | NOT NULL                                                          | Tổng số câu trong đề thi                  |
+| `has_paralysis_failed` | TINYINT(1)   | NOT NULL, DEFAULT 0                                               | 1: Bị đánh trượt do sai câu hỏi điểm liệt |
+| `is_passed`            | TINYINT(1)   | NOT NULL, DEFAULT 0                                               | 1: ĐẠT, 0: KHÔNG ĐẠT                      |
+| `time_spent_seconds`   | INT          | NOT NULL, DEFAULT 0                                               | Thời gian hoàn thành bài thi (giây)       |
+| `started_at`           | TIMESTAMP    | DEFAULT CURRENT_TIMESTAMP                                         | Thời điểm phát đề thi                     |
+| `submitted_at`         | TIMESTAMP    | NULL                                                              | Thời điểm nộp bài thi                     |
+
+Bảng có index trên (`user_id`, `started_at`) và `license_type_id`.
 
 #### Bảng 8: `exam_session_details` (Chi tiết câu trả lời trong bài thi)
 
-| Tên cột              | Kiểu dữ liệu | Ràng buộc                            | Mô tả                                        |
-| :------------------- | :----------- | :----------------------------------- | :------------------------------------------- |
-| `id`                 | INT          | PK, AUTO_INCREMENT                   | Mã chi tiết câu làm                          |
-| `exam_session_id`    | INT          | FK $\rightarrow$ `exam_sessions(id)` | Thuộc phiên thi nào                          |
-| `question_id`        | INT          | FK $\rightarrow$ `questions(id)`     | Câu hỏi xuất hiện trong đề                   |
-| `selected_answer_id` | INT          | FK $\rightarrow$ `answers(id)`       | ID đáp án thí sinh đã chọn (NULL nếu bỏ qua) |
-| `is_correct`         | TINYINT(1)   | DEFAULT 0                            | 1: Làm đúng, 0: Làm sai                      |
+| Tên cột              | Kiểu dữ liệu | Ràng buộc                                               | Mô tả                           |
+| :------------------- | :----------- | :------------------------------------------------------ | :------------------------------ |
+| `id`                 | INT          | PK, AUTO_INCREMENT                                      | Mã chi tiết câu làm             |
+| `exam_session_id`    | INT          | NOT NULL, FK $\rightarrow$ `exam_sessions(id)`          | Thuộc phiên thi nào             |
+| `question_id`        | INT          | NOT NULL, FK $\rightarrow$ `questions(id)`              | Câu hỏi xuất hiện trong đề      |
+| `selected_answer_id` | INT          | NULL, FK $\rightarrow$ `answers(id)` ON DELETE SET NULL | Đáp án đã chọn; NULL nếu bỏ qua |
+| `is_correct`         | TINYINT(1)   | NOT NULL, DEFAULT 0                                     | 1: Làm đúng, 0: Làm sai         |
 
-#### Bảng 9 & 10: `sign_categories` & `traffic_signs` (Hệ thống biển báo đường bộ)
+Bảng có khóa ngoại `exam_session_id` tham chiếu `exam_sessions(id)` với `ON DELETE CASCADE`, `question_id` tham chiếu `questions(id)` với `ON DELETE RESTRICT`; có index trên `exam_session_id` và `question_id`.
 
-- `sign_categories`: Danh mục 5 nhóm biển báo (`CAM`, `NGUY_HIEM`, `HIEU_LENH`, `CHI_DAN`, `PHU`).
-- `traffic_signs`: Chi tiết biển báo (`sign_code` như P.101, W.201; `name`, `description`, `image_url`). Có Fulltext Index trên (`sign_code`, `name`).
+#### Bảng 9: `sign_categories` (Nhóm biển báo)
 
-#### Bảng 11 & 12: `fine_categories` & `traffic_fines` (Tra cứu mức xử phạt vi phạm)
+| Tên cột       | Kiểu dữ liệu | Ràng buộc          | Mô tả                                                            |
+| :------------ | :----------- | :----------------- | :--------------------------------------------------------------- |
+| `id`          | INT          | PK, AUTO_INCREMENT | Mã nhóm biển báo                                                 |
+| `code`        | VARCHAR(50)  | NOT NULL, UNIQUE   | Mã nhóm, ví dụ `CAM`, `NGUY_HIEM`, `HIEU_LENH`, `CHI_DAN`, `PHU` |
+| `name`        | VARCHAR(150) | NOT NULL           | Tên nhóm biển báo                                                |
+| `description` | TEXT         | NULL               | Mô tả nhóm                                                       |
 
-- `fine_categories`: Phân loại phương tiện (`OTO`, `XE_MAY`, `KHAC`).
-- `traffic_fines`: Mức phạt (`violation_title`, `violation_detail`, `min_fine_amount`, `max_fine_amount`, `penalty_addition`, `legal_reference`). Có Fulltext Index trên (`violation_title`, `violation_detail`).
+#### Bảng 10: `traffic_signs` (Biển báo giao thông)
+
+| Tên cột       | Kiểu dữ liệu | Ràng buộc                                                           | Mô tả                   |
+| :------------ | :----------- | :------------------------------------------------------------------ | :---------------------- |
+| `id`          | INT          | PK, AUTO_INCREMENT                                                  | Mã biển báo             |
+| `category_id` | INT          | NOT NULL, FK $\rightarrow$ `sign_categories(id)` ON DELETE RESTRICT | Nhóm biển báo           |
+| `sign_code`   | VARCHAR(50)  | NOT NULL                                                            | Mã hiệu biển báo        |
+| `name`        | VARCHAR(255) | NOT NULL                                                            | Tên biển báo            |
+| `description` | TEXT         | NULL                                                                | Mô tả, ý nghĩa biển báo |
+| `image_url`   | VARCHAR(255) | NULL                                                                | Đường dẫn hình ảnh      |
+| `created_at`  | TIMESTAMP    | DEFAULT CURRENT_TIMESTAMP                                           | Thời điểm tạo bản ghi   |
+
+Bảng có index trên `category_id`, `sign_code` và FULLTEXT index trên (`sign_code`, `name`).
+
+#### Bảng 11: `fine_categories` (Nhóm phương tiện tra cứu mức phạt)
+
+| Tên cột        | Kiểu dữ liệu                  | Ràng buộc          | Mô tả                |
+| :------------- | :---------------------------- | :----------------- | :------------------- |
+| `id`           | INT                           | PK, AUTO_INCREMENT | Mã nhóm              |
+| `vehicle_type` | ENUM('OTO', 'XE_MAY', 'KHAC') | NOT NULL           | Loại phương tiện     |
+| `name`         | VARCHAR(150)                  | NOT NULL           | Tên nhóm phương tiện |
+| `description`  | TEXT                          | NULL               | Mô tả nhóm           |
+
+#### Bảng 12: `traffic_fines` (Mức xử phạt vi phạm)
+
+| Tên cột            | Kiểu dữ liệu | Ràng buộc                                                           | Mô tả                    |
+| :----------------- | :----------- | :------------------------------------------------------------------ | :----------------------- |
+| `id`               | INT          | PK, AUTO_INCREMENT                                                  | Mã mức phạt              |
+| `fine_category_id` | INT          | NOT NULL, FK $\rightarrow$ `fine_categories(id)` ON DELETE RESTRICT | Nhóm phương tiện         |
+| `violation_title`  | VARCHAR(255) | NOT NULL                                                            | Tên hành vi vi phạm      |
+| `violation_detail` | TEXT         | NOT NULL                                                            | Mô tả chi tiết hành vi   |
+| `min_fine_amount`  | BIGINT       | NOT NULL, DEFAULT 0                                                 | Mức phạt thấp nhất (VNĐ) |
+| `max_fine_amount`  | BIGINT       | NOT NULL, DEFAULT 0                                                 | Mức phạt cao nhất (VNĐ)  |
+| `penalty_addition` | TEXT         | NULL                                                                | Hình phạt bổ sung        |
+| `legal_reference`  | VARCHAR(255) | NULL                                                                | Căn cứ pháp lý           |
+| `created_at`       | TIMESTAMP    | DEFAULT CURRENT_TIMESTAMP                                           | Thời điểm tạo bản ghi    |
+
+Bảng có index trên `fine_category_id` và FULLTEXT index trên (`violation_title`, `violation_detail`).
 
 ---
 
@@ -618,14 +679,14 @@ classDiagram
 
 Bảng tổng hợp đối chiếu trực tiếp giữa **Bảng CSDL**, **Lớp Model**, **Lớp Dịch vụ**, **Lớp Điều khiển** và **Tuyến đường RESTful API**:
 
-| Phân hệ nghiệp vụ               | Bảng CSDL (MySQL)                                                                | Lớp Model (OOP)                                                      | Lớp Service (Business)             | Lớp Controller (API)                     | Endpoint RESTful API chính                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       |
-| :------------------------------ | :------------------------------------------------------------------------------- | :------------------------------------------------------------------- | :--------------------------------- | :--------------------------------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Xác thực & Người dùng**       | `users`                                                                          | `UserModel`                                                          | `AuthService`<br>`UserService`     | `AuthController`<br>`UserController`     | `POST /api/v1/auth/send-register-otp`<br>`POST /api/v1/auth/verify-register-otp`<br>`POST /api/v1/auth/login`<br>`POST /api/v1/auth/forgot-password`<br>`POST /api/v1/auth/verify-otp`<br>`POST /api/v1/auth/reset-password`<br>`GET /api/v1/auth/me`<br>`PUT /api/v1/auth/profile`<br>`GET /api/v1/users`<br>`PATCH /api/v1/users/:id/toggle-lock`<br>`PATCH /api/v1/users/:id/role`<br>`DELETE /api/v1/users/:id` |
-| **Ôn tập 600 câu hỏi**          | `chapters`, `questions`, `answers`                                               | `ChapterModel`<br>`QuestionModel`<br>`AnswerModel`                   | `QuestionService`                  | `QuestionController`                     | `GET /api/v1/chapters`<br>`GET /api/v1/questions`<br>`GET /api/v1/questions/:id`                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 |
-| **Tra cứu Biển báo & Mức phạt** | `sign_categories`, `traffic_signs`, `fine_categories`, `traffic_fines`           | `TrafficSignModel`<br>`TrafficFineModel`                             | `LookupService`<br>`AISignService` | `LookupController`<br>`AISignController` | `GET /api/v1/lookup/signs`<br>`GET /api/v1/lookup/signs/:id`<br>`GET /api/v1/lookup/signs/categories`<br>`POST /api/v1/lookup/signs/recognize-file`<br>`POST /api/v1/lookup/signs/recognize-camera`<br>`GET /api/v1/lookup/fines`<br>`GET /api/v1/lookup/fines/:id`<br>`GET /api/v1/lookup/fines/categories`                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     |
-| **Chatbot hỏi đáp AI**          | _(In-memory, không có CSDL)_                                                     | _(Không có Model)_                                                   | `ChatbotService`                   | `ChatbotController`                      | `POST /api/v1/chatbot/send`<br>`POST /api/v1/chatbot/clear`                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      |
-| **Thi sát hạch chuẩn GTVT**     | `license_types`, `exam_structure_rules`, `exam_sessions`, `exam_session_details` | `LicenseTypeModel`<br>`ExamStructureRuleModel`<br>`ExamSessionModel` | `ExamService`                      | `ExamController`                         | `GET /api/v1/license-types`<br>`POST /api/v1/exams/generate`<br>`POST /api/v1/exams/:id/submit`<br>`GET /api/v1/exams/history`<br>`GET /api/v1/exams/:id/review`                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 |
-| **Quản trị Admin Dashboard**    | Toàn bộ 12 bảng                                                                  | Toàn bộ các Model<br>`AdminDashboardModel`                          | `AdminService`                     | `AdminController`                        | `GET /api/v1/admin/dashboard/stats`<br>`POST /api/v1/admin/questions`<br>`PUT /api/v1/admin/license-types/:id/matrix`<br>`GET /api/v1/admin/chapters`<br>`POST /api/v1/admin/chapters`<br>`PUT /api/v1/admin/chapters/:id`<br>`DELETE /api/v1/admin/chapters/:id`<br>`GET /api/v1/admin/license-types`<br>`POST /api/v1/admin/license-types`<br>`PUT /api/v1/admin/license-types/:id`<br>`PATCH /api/v1/admin/license-types/:id/toggle-status`<br>`DELETE /api/v1/admin/license-types/:id`<br>`GET /api/v1/admin/license-types/:id/matrix`<br>`PUT /api/v1/admin/license-types/:id/matrix`<br>`GET /api/v1/admin/fines/categories`<br>`GET /api/v1/admin/fines`<br>`GET /api/v1/admin/fines/:id`<br>`POST /api/v1/admin/fines`<br>`PUT /api/v1/admin/fines/:id`<br>`DELETE /api/v1/admin/fines/:id` |
+| Phân hệ nghiệp vụ               | Bảng CSDL (MySQL)                                                                | Lớp Model (OOP)                                                      | Lớp Service (Business)             | Lớp Controller (API)                     | Endpoint RESTful API chính                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          |
+| :------------------------------ | :------------------------------------------------------------------------------- | :------------------------------------------------------------------- | :--------------------------------- | :--------------------------------------- | :-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Xác thực & Người dùng**       | `users`                                                                          | `UserModel`                                                          | `AuthService`<br>`UserService`     | `AuthController`<br>`UserController`     | `POST /api/v1/auth/send-register-otp`<br>`POST /api/v1/auth/verify-register-otp`<br>`POST /api/v1/auth/login`<br>`POST /api/v1/auth/forgot-password`<br>`POST /api/v1/auth/verify-otp`<br>`POST /api/v1/auth/reset-password`<br>`GET /api/v1/auth/me`<br>`PUT /api/v1/auth/profile`<br>`GET /api/v1/users`<br>`PATCH /api/v1/users/:id/toggle-lock`<br>`PATCH /api/v1/users/:id/role`<br>`DELETE /api/v1/users/:id`                                                                                                                                                                                                                                                                                                                                                                                 |
+| **Ôn tập 600 câu hỏi**          | `chapters`, `questions`, `answers`                                               | `ChapterModel`<br>`QuestionModel`<br>`AnswerModel`                   | `QuestionService`                  | `QuestionController`                     | `GET /api/v1/chapters`<br>`GET /api/v1/questions`<br>`GET /api/v1/questions/:id`                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    |
+| **Tra cứu Biển báo & Mức phạt** | `sign_categories`, `traffic_signs`, `fine_categories`, `traffic_fines`           | `TrafficSignModel`<br>`TrafficFineModel`                             | `LookupService`<br>`AISignService` | `LookupController`<br>`AISignController` | `GET /api/v1/lookup/signs`<br>`GET /api/v1/lookup/signs/:id`<br>`GET /api/v1/lookup/signs/categories`<br>`POST /api/v1/lookup/signs/recognize-file`<br>`POST /api/v1/lookup/signs/recognize-camera`<br>`GET /api/v1/lookup/fines`<br>`GET /api/v1/lookup/fines/:id`<br>`GET /api/v1/lookup/fines/categories`                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        |
+| **Chatbot hỏi đáp AI**          | _(In-memory, không có CSDL)_                                                     | _(Không có Model)_                                                   | `ChatbotService`                   | `ChatbotController`                      | `POST /api/v1/chatbot/send`<br>`POST /api/v1/chatbot/clear`                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         |
+| **Thi sát hạch chuẩn GTVT**     | `license_types`, `exam_structure_rules`, `exam_sessions`, `exam_session_details` | `LicenseTypeModel`<br>`ExamStructureRuleModel`<br>`ExamSessionModel` | `ExamService`                      | `ExamController`                         | `GET /api/v1/license-types`<br>`POST /api/v1/exams/generate`<br>`POST /api/v1/exams/:id/submit`<br>`GET /api/v1/exams/history`<br>`GET /api/v1/exams/:id/review`                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    |
+| **Quản trị Admin Dashboard**    | Toàn bộ 12 bảng                                                                  | Toàn bộ các Model<br>`AdminDashboardModel`                           | `AdminService`                     | `AdminController`                        | `GET /api/v1/admin/dashboard/stats`<br>`POST /api/v1/admin/questions`<br>`PUT /api/v1/admin/license-types/:id/matrix`<br>`GET /api/v1/admin/chapters`<br>`POST /api/v1/admin/chapters`<br>`PUT /api/v1/admin/chapters/:id`<br>`DELETE /api/v1/admin/chapters/:id`<br>`GET /api/v1/admin/license-types`<br>`POST /api/v1/admin/license-types`<br>`PUT /api/v1/admin/license-types/:id`<br>`PATCH /api/v1/admin/license-types/:id/toggle-status`<br>`DELETE /api/v1/admin/license-types/:id`<br>`GET /api/v1/admin/license-types/:id/matrix`<br>`PUT /api/v1/admin/license-types/:id/matrix`<br>`GET /api/v1/admin/fines/categories`<br>`GET /api/v1/admin/fines`<br>`GET /api/v1/admin/fines/:id`<br>`POST /api/v1/admin/fines`<br>`PUT /api/v1/admin/fines/:id`<br>`DELETE /api/v1/admin/fines/:id` |
 
 ---
 

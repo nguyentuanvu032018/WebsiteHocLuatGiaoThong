@@ -1,6 +1,6 @@
 -- ==============================================================================
 -- SEED DATA 01: 7 CHƯƠNG LÝ THUYẾT & MA TRẬN ĐỀ THI CHUẨN BỘ GTVT
--- Áp dụng cho các hạng giấy phép lái xe: A, A1, B, B1, C, C1, D, D1, D2
+-- Áp dụng cho các hạng giấy phép lái xe: A, A1, B, B1, C, C1
 -- ==============================================================================
 
 USE traffic_exam_db;
@@ -19,17 +19,14 @@ ON DUPLICATE KEY UPDATE
     description = VALUES(description),
     order_number = VALUES(order_number);
 
--- 2. CẤU HÌNH ĐẦY ĐỦ CÁC HẠNG GIẤY PHÉP LÁI XE (A, A1, B, B1, C, C1, D, D1, D2)
+-- 2. CẤU HÌNH CÁC HẠNG GIẤY PHÉP LÁI XE (A, A1, B, B1, C, C1)
 INSERT INTO license_types (id, code, name, total_questions, duration_minutes, passing_score, description) VALUES
 (1, 'A', 'Hạng A - Xe máy 2 bánh', 25, 19, 21, 'Phương tiện 2 bánh theo tiêu chuẩn của Bộ GTVT'),
 (2, 'A1', 'Hạng A1 - Xe máy dưới 175cc', 25, 19, 21, 'Phương tiện 2 bánh có dung tích xi lanh dưới 175cc'),
 (3, 'B', 'Hạng B - Ô tô con & xe tải nhẹ', 30, 20, 27, 'Ôtô chở người dưới 9 chỗ và xe tải sử dụng cho vận tải nhẹ'),
 (4, 'B1', 'Hạng B1 - Ô tô số tự động', 30, 20, 27, 'Ôtô chở người dưới 9 chỗ, số tự động hoặc máy kéo hạng nhẹ'),
 (5, 'C', 'Hạng C - Xe tải trên 3.5 tấn', 40, 24, 36, 'Xe tải có trọng tải lớn hơn 3.500kg và các phương tiện tương ứng'),
-(6, 'C1', 'Hạng C1 - Xe tải dưới 3.5 tấn', 40, 24, 36, 'Xe tải có trọng tải dưới 3.500kg và các phương tiện tương ứng'),
-(7, 'D', 'Hạng D - Ô tô khách 10 đến 30 chỗ', 45, 26, 41, 'Ôtô chở người từ 10 đến 30 chỗ ngồi'),
-(8, 'D1', 'Hạng D1 - Ô tô khách 30 đến 45 chỗ', 45, 26, 41, 'Ôtô chở người từ 30 đến 45 chỗ ngồi'),
-(9, 'D2', 'Hạng D2 - Xe kéo rơ moóc & chuyên dùng', 45, 26, 41, 'Phương tiện kéo rơ moóc, xe chuyên dùng và các xe tương ứng')
+(6, 'C1', 'Hạng C1 - Xe tải dưới 3.5 tấn', 40, 24, 36, 'Xe tải có trọng tải dưới 3.500kg và các phương tiện tương ứng')
 ON DUPLICATE KEY UPDATE
     name = VALUES(name),
     total_questions = VALUES(total_questions),
@@ -63,10 +60,3 @@ INSERT INTO exam_structure_rules (license_type_id, chapter_id, question_count, p
 (5, 1, 10, 1), (5, 2, 1, 0), (5, 3, 1, 0), (5, 4, 2, 0), (5, 5, 1, 0), (5, 6, 12, 0), (5, 7, 13, 0),
 (6, 1, 10, 1), (6, 2, 1, 0), (6, 3, 1, 0), (6, 4, 2, 0), (6, 5, 1, 0), (6, 6, 12, 0), (6, 7, 13, 0);
 
--- -----------------------------------------------------------------------------
--- HẠNG D / D1 / D2 (45 câu - 26 phút - Đạt 41/45 - Bắt buộc 1 câu điểm liệt)
--- -----------------------------------------------------------------------------
-INSERT INTO exam_structure_rules (license_type_id, chapter_id, question_count, paralysis_count) VALUES
-(7, 1, 11, 1), (7, 2, 2, 0), (7, 3, 1, 0), (7, 4, 2, 0), (7, 5, 1, 0), (7, 6, 14, 0), (7, 7, 14, 0),
-(8, 1, 11, 1), (8, 2, 2, 0), (8, 3, 1, 0), (8, 4, 2, 0), (8, 5, 1, 0), (8, 6, 14, 0), (8, 7, 14, 0),
-(9, 1, 11, 1), (9, 2, 2, 0), (9, 3, 1, 0), (9, 4, 2, 0), (9, 5, 1, 0), (9, 6, 14, 0), (9, 7, 14, 0);

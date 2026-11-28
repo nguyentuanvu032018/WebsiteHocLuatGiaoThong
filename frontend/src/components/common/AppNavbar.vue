@@ -5,6 +5,10 @@ import { useAuthStore } from '../../stores/auth';
 import { resolveAssetUrl } from '../../services/api';
 import Swal from 'sweetalert2';
 import { LICENSE_GROUPS } from '../../utils/licenseGroups';
+import {
+  ADMIN_PREVIEW_HASH,
+  getAdminPortalUrl,
+} from '../../utils/portals';
 import ProfileModal from './ProfileModal.vue';
 
 const router = useRouter();
@@ -19,6 +23,11 @@ const studyMenu = ref(null);
 const openMenu = ref(null);
 const showProfileModal = ref(false);
 const avatarLoadFailed = ref(false);
+const cameFromAdmin = computed(() => window.location.hash === ADMIN_PREVIEW_HASH);
+
+const returnToAdmin = () => {
+  window.location.assign(getAdminPortalUrl('/admin/dashboard'));
+};
 
 watch(() => authStore.userAvatar, () => {
   avatarLoadFailed.value = false;
@@ -261,6 +270,17 @@ const handleLogout = async () => {
 
         <!-- Right Side: User Profile & Auth Buttons -->
         <div class="d-flex align-items-center gap-2 mt-3 mt-lg-0">
+          <button
+            v-if="cameFromAdmin"
+            type="button"
+            class="btn btn-outline-danger px-3 py-2 fw-bold d-flex align-items-center gap-2"
+            title="Quay lại giao diện quản trị"
+            @click="returnToAdmin"
+          >
+            <i class="bi bi-shield-lock-fill"></i>
+            <span>Quay về quản trị</span>
+          </button>
+
           <!-- Khi CHƯA ĐĂNG NHẬP -->
           <template v-if="!isAuthenticated">
             <router-link to="/login" class="btn btn-soft-primary px-3 py-2">

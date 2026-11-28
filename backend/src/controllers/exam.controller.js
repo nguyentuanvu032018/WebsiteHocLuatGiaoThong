@@ -7,7 +7,7 @@ const { successResponse, errorResponse } = require('../utils/apiResponse');
  */
 class ExamController {
   /**
-   * Lấy danh sách các hạng bằng lái xe (A, A1, B, B1, C, C1, D, D1, D2)
+   * Lấy danh sách các hạng bằng lái xe (A, A1, B, B1, C, C1)
    * GET /api/v1/exams/license-types
    */
   getLicenseTypes = async (req, res, next) => {

@@ -6,7 +6,7 @@
 > **Xác thực & Phân quyền:** JWT (JSON Web Token) & Role-Based Access Control (RBAC)  
 > **Tiêu chuẩn:** Bộ 600 câu hỏi lý thuyết & quy chuẩn sát hạch Tổng cục Đường bộ Việt Nam  
 
-> **Trạng thái hiện thực đến 2026-11-09:** Frontend Vue SPA, backend REST API và các phân hệ ôn tập theo nhóm hạng, thi thử, lịch sử, tra cứu và quản trị chính đã được xây dựng. Lối vào ôn tập chung toàn bộ 7 chương đã được gỡ; A/A1 ôn chương I–V, B/B1 và C/C1 ôn đủ 7 chương. Học viên và admin dùng hai cổng frontend riêng (`5173` và `5174`); ngrok chỉ mở cổng học viên. Cấu trúc chương vẫn được giữ cho ma trận thi và chức năng quản trị. Xem `Cores/checkpoint.md` để biết chi tiết phần đã hoàn thành, kiểm thử đã chạy và công việc còn lại.
+> **Trạng thái hiện thực đến 2026-11-26:** Frontend Vue SPA, backend REST API và các phân hệ ôn tập theo nhóm hạng, thi thử, lịch sử, tra cứu, AI nhận diện biển báo, chatbot và quản trị đã được xây dựng. Lối vào ôn tập chung toàn bộ 7 chương đã được gỡ; A/A1 ôn chương I–V, B/B1 và C/C1 ôn đủ 7 chương. Học viên và admin dùng hai cổng frontend riêng (`5173` và `5174`); ngrok chỉ mở cổng học viên. Các hạng mục bảo mật còn mở được ghi tại `Cores/fix_bao_mat.md`.
 
 ---
 
@@ -26,7 +26,7 @@
 ## 1. TỔNG QUAN DỰ ÁN & YÊU CẦU NGHIỆP VỤ
 
 ### 1.1. Mục tiêu hệ thống
-Hệ thống được xây dựng nhằm cung cấp giải pháp toàn diện cho người học và ôn thi sát hạch lý thuyết lái xe các hạng (A, A1, B, B1, C, C1, D, D1, D2) với trải nghiệm thi thử mô phỏng chính xác kỳ thi thực tế, đồng thời cung cấp công cụ tra cứu luật giao thông tức thì.
+Hệ thống được xây dựng nhằm cung cấp giải pháp toàn diện cho người học và ôn thi sát hạch lý thuyết lái xe các hạng (A, A1, B, B1, C, C1) với trải nghiệm thi thử mô phỏng chính xác kỳ thi thực tế, đồng thời cung cấp công cụ tra cứu luật giao thông tức thì.
 
 ### 1.2. Các phân hệ chức năng bắt buộc
 1. **Phân hệ Ôn tập theo nhóm GPLX:**
@@ -38,7 +38,7 @@ Hệ thống được xây dựng nhằm cung cấp giải pháp toàn diện ch
    - Tra cứu hệ thống biển báo đường bộ (biển cấm, biển nguy hiểm, biển hiệu lệnh, biển chỉ dẫn, biển phụ) theo mã biển, hình ảnh và phân loại.
    - Tra cứu mức xử phạt vi phạm hành chính giao thông (Nghị định 100/2019/NĐ-CP và Nghị định 123/2021/NĐ-CP) theo phương tiện và từ khóa hành vi.
 3. **Phân hệ Thi sát hạch ngẫu nhiên chuẩn Bộ GTVT:**
-   - Sinh đề ngẫu nhiên theo ma trận quy định của từng hạng bằng (A/A1: 25 câu/19p; B/B1: 30 câu/20p; C/C1: 40 câu/24p; D/D1/D2: 45 câu/26p...).
+   - Sinh đề ngẫu nhiên theo ma trận quy định của từng hạng bằng (A/A1: 25 câu/19p; B/B1: 30 câu/20p; C/C1: 40 câu/24p).
    - Đảm bảo trong mỗi đề luôn có đúng số lượng câu hỏi điểm liệt theo quy định.
    - Đồng hồ đếm ngược thời gian thực, chuyển đổi giao diện cảnh báo khi sắp hết giờ.
    - Bảng phím tắt bàn phím (1, 2, 3, 4 chọn đáp án; mũi tên chuyển câu) tương tự phần mềm sát hạch tại trung tâm thi.
@@ -66,7 +66,7 @@ graph TB
         UI_Student[Học viên luyện thi]
         UI_Admin[Quản trị viên Admin]
         VueRouter[Vue Router 4 + Navigation Guards]
-        PiniaStore[Pinia State Management: Auth, Exam, Study]
+        PiniaStore[Pinia State Management: Auth Store]
         AxiosClient[Axios HTTP Client + Interceptors]
         
         UI_Guest --> VueRouter
@@ -151,7 +151,7 @@ erDiagram
 
     LICENSE_TYPES {
         int id PK
-        string code "A, A1, B, B1, C, C1, D, D1, D2"
+        string code "A, A1, B, B1, C, C1"
         string name
         int total_questions
         int duration_minutes
@@ -256,9 +256,6 @@ erDiagram
 | **B1** | Ôtô số tự động | **30 câu** | **20 phút** | **27 / 30** | **0 câu** |
 | **C** | Xe tải trên 3.5 tấn | **40 câu** | **24 phút** | **36 / 40** | **0 câu** |
 | **C1** | Xe tải dưới 3.5 tấn | **40 câu** | **24 phút** | **36 / 40** | **0 câu** |
-| **D** | Ôtô khách 10 đến 30 chỗ | **45 câu** | **26 phút** | **41 / 45** | **0 câu** |
-| **D1** | Ôtô khách 30 đến 45 chỗ | **45 câu** | **26 phút** | **41 / 45** | **0 câu** |
-| **D2** | Xe kéo rơ moóc & chuyên dùng | **45 câu** | **26 phút** | **41 / 45** | **0 câu** |
 
 ---
 
@@ -538,7 +535,7 @@ CT466_NLN/
 │   ├── database/
 │   │   ├── schema.sql                    # Script DDL khởi tạo toàn bộ bảng & indexes
 │   │   └── seeds/
-│   │       ├── 01_license_types.sql      # Dữ liệu các hạng bằng A, A1, B, B1, C, C1, D, D1, D2
+│   │       ├── 01_license_types.sql      # Dữ liệu các hạng bằng A, A1, B, B1, C, C1
 │   │       ├── 02_chapters.sql           # Dữ liệu 7 chương luật giao thông
 │   │       ├── 03_questions_600.sql      # Toàn bộ 600 câu hỏi và các phương án trả lời
 │   │       ├── 04_traffic_signs.sql      # Danh mục hệ thống biển báo đường bộ
@@ -749,7 +746,7 @@ gantt
     - `GET /api/v1/traffic-fines`: Lọc theo nhóm phương tiện (`OTO`, `XE_MAY`) và tìm kiếm hành vi vi phạm ("nồng độ cồn", "vượt đèn đỏ", "chạy quá tốc độ"...).
 - **Task 2.4: Hiện thực Thuật toán Sinh đề thi ngẫu nhiên theo ma trận Bộ GTVT:**
   - **File tác động:** `backend/src/services/exam.service.js`, `backend/src/controllers/exam.controller.js`.
-  - Thuật toán đọc bảng `exam_structure_rules` của hạng bằng tương ứng (A, A1, B, B1, C, C1, D, D1, D2...).
+  - Thuật toán đọc bảng `exam_structure_rules` của hạng bằng tương ứng (A, A1, B, B1, C, C1).
   - Với mỗi chương, thuật toán bốc ngẫu nhiên đúng số lượng câu điểm liệt và số câu bình thường quy định (`ORDER BY RAND() LIMIT ?`).
   - Trộn ngẫu nhiên thứ tự câu hỏi trong đề thi.
   - Tạo phiên thi mới trong `exam_sessions` và lưu danh sách câu hỏi vào `exam_session_details`.
@@ -807,7 +804,7 @@ gantt
   - Bảng tra cứu mức phạt với màu sắc phân biệt theo nhóm phương tiện (Ô tô, Xe máy), tìm kiếm nhanh hành vi vi phạm.
 - **Task 3.6: Xây dựng Giao diện Phòng thi Sát hạch Realtime (`ExamRoomView.vue`):**
   - **File tác động:** `src/views/exam/ExamSelectView.vue`, `src/views/exam/ExamRoomView.vue`, các components con `CountdownTimer.vue`, `QuestionPalette.vue`, `QuestionCard.vue`.
-  - **Chọn hạng bằng (`ExamSelectView`):** Thẻ giới thiệu các hạng GPLX (A, A1, B, B1, C, C1, D, D1, D2) kèm thông tin số câu, thời gian và điểm đạt.
+  - **Chọn hạng bằng (`ExamSelectView`):** Thẻ giới thiệu các hạng GPLX (A, A1, B, B1, C, C1) kèm thông tin số câu, thời gian và điểm đạt.
   - **Đồng hồ đếm ngược (`CountdownTimer`):** Chạy lùi từng giây theo thời gian quy định; tự động chuyển sang màu vàng khi còn dưới 5 phút và nhấp nháy đỏ khi còn dưới 2 phút; tự động kích hoạt nộp bài khi chạm `00:00`.
   - **Lưới danh sách câu hỏi (`QuestionPalette`):** Hiển thị danh sách các ô vuông câu hỏi (1..N). Màu xám (chưa trả lời), màu xanh dương (đã chọn đáp án), viền vàng nổi bật (câu đang xem).
   - **Hỗ trợ phím tắt bàn phím:**

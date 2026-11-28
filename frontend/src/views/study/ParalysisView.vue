@@ -206,7 +206,7 @@ onMounted(() => {
             QUY ĐỊNH BẮT BUỘC TRONG KỲ THI SÁT HẠCH LÝ THUYẾT GPLX
           </h5>
           <p class="text-dark small mb-2 lh-base">
-            Mỗi đề thi thật của mọi hạng bằng (A, A1, B, B1, C, C1, D, D1, D2) luôn chứa từ <strong>1 đến 2 câu hỏi điểm liệt</strong>. 
+            Mỗi đề thi thật của các hạng bằng (A, A1, B, B1, C, C1) luôn chứa câu hỏi điểm liệt.
             Thí sinh trả lời <strong>sai 1 câu điểm liệt thì bị TRƯỢT NGAY LẬP TỨC</strong>, kể cả khi tất cả các câu hỏi khác đều đạt điểm tối đa.
           </p>
           <div class="d-flex flex-wrap align-items-center gap-3 fs-xs text-danger-emphasis fw-bold">

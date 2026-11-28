@@ -1,6 +1,6 @@
 /**
  * Script: update_license_codes.js
- * Mục đích: Cập nhật code và name của license_types sang hệ thống 9 hạng mới
+ * Mục đích: Cập nhật code và name của license_types theo hệ thống 6 hạng
  * Chạy: node backend/database/seeds/update_license_codes.js
  */
 
@@ -22,9 +22,6 @@ const LICENSE_UPDATES = [
   { id: 4, code: 'B1', name: 'Hạng B1 - Ô tô số tự động',                 description: 'Ôtô chở người dưới 9 chỗ, số tự động hoặc máy kéo hạng nhẹ' },
   { id: 5, code: 'C',  name: 'Hạng C - Xe tải trên 3.5 tấn',              description: 'Xe tải có trọng tải lớn hơn 3.500kg và các phương tiện tương ứng' },
   { id: 6, code: 'C1', name: 'Hạng C1 - Xe tải dưới 3.5 tấn',            description: 'Xe tải có trọng tải dưới 3.500kg và các phương tiện tương ứng' },
-  { id: 7, code: 'D',  name: 'Hạng D - Ô tô khách 10 đến 30 chỗ',        description: 'Ôtô chở người từ 10 đến 30 chỗ ngồi' },
-  { id: 8, code: 'D1', name: 'Hạng D1 - Ô tô khách 30 đến 45 chỗ',       description: 'Ôtô chở người từ 30 đến 45 chỗ ngồi' },
-  { id: 9, code: 'D2', name: 'Hạng D2 - Xe kéo rơ moóc & chuyên dùng',   description: 'Phương tiện kéo rơ moóc, xe chuyên dùng và các xe tương ứng' },
 ];
 
 async function updateLicenseCodes() {

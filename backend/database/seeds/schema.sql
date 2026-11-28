@@ -51,7 +51,7 @@ CREATE TABLE users (
 -- ==============================================================================
 CREATE TABLE license_types (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    code VARCHAR(10) NOT NULL UNIQUE COMMENT 'Mã hạng: A, A1, B, B1, C, C1, D, D1, D2',
+    code VARCHAR(10) NOT NULL UNIQUE COMMENT 'Mã hạng: A, A1, B, B1, C, C1',
     name VARCHAR(100) NOT NULL COMMENT 'Tên đầy đủ của hạng giấy phép lái xe',
     total_questions INT NOT NULL COMMENT 'Tổng số lượng câu hỏi trong 1 đề thi',
     duration_minutes INT NOT NULL COMMENT 'Thời gian thi tính bằng phút',
@@ -239,10 +239,7 @@ INSERT INTO license_types (id, code, name, total_questions, duration_minutes, pa
 (3, 'B', 'Hạng B - Ô tô con & xe tải nhẹ', 30, 20, 27, 'Ôtô chở người dưới 9 chỗ và xe tải sử dụng cho vận tải nhẹ'),
 (4, 'B1', 'Hạng B1 - Ô tô số tự động', 30, 20, 27, 'Ôtô chở người dưới 9 chỗ, số tự động hoặc máy kéo hạng nhẹ'),
 (5, 'C', 'Hạng C - Xe tải trên 3.5 tấn', 40, 24, 36, 'Xe tải có trọng tải lớn hơn 3.500kg và các phương tiện tương ứng'),
-(6, 'C1', 'Hạng C1 - Xe tải dưới 3.5 tấn', 40, 24, 36, 'Xe tải có trọng tải dưới 3.500kg và các phương tiện tương ứng'),
-(7, 'D', 'Hạng D - Ô tô khách 10 đến 30 chỗ', 45, 26, 41, 'Ôtô chở người từ 10 đến 30 chỗ ngồi'),
-(8, 'D1', 'Hạng D1 - Ô tô khách 30 đến 45 chỗ', 45, 26, 41, 'Ôtô chở người từ 30 đến 45 chỗ ngồi'),
-(9, 'D2', 'Hạng D2 - Xe kéo rơ moóc & chuyên dùng', 45, 26, 41, 'Phương tiện kéo rơ moóc, xe chuyên dùng và các xe tương ứng')
+(6, 'C1', 'Hạng C1 - Xe tải dưới 3.5 tấn', 40, 24, 36, 'Xe tải có trọng tải dưới 3.500kg và các phương tiện tương ứng')
 ON DUPLICATE KEY UPDATE name=VALUES(name);
 
 -- 4. Khởi tạo 5 nhóm biển báo đường bộ

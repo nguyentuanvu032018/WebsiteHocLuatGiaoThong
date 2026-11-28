@@ -3,7 +3,7 @@
 
 > Tài liệu này cung cấp hướng dẫn thực thi từng bước bằng dòng lệnh (CLI) để khởi tạo toàn bộ môi trường mã nguồn cho cả Backend và Frontend.
 >
-> **Lưu ý trạng thái (2026-11-09):** Đây là hướng dẫn khởi tạo/dựng lại dự án, không phải danh sách việc cần chạy trên workspace hiện có. Hệ thống có hai cổng frontend: học viên `5173`, quản trị `5174`; chỉ cổng học viên được mở qua ngrok. Xem `Cores/checkpoint.md` để biết trạng thái hiện tại và việc còn lại.
+> **Lưu ý trạng thái (2026-11-26):** Đây là hướng dẫn khởi tạo/dựng lại dự án, không phải danh sách việc cần chạy trên workspace hiện có. Hệ thống có hai cổng frontend: học viên `5173`, quản trị `5174`; chỉ cổng học viên được mở qua ngrok. Xem `Cores/checkpoint.md` để biết trạng thái hiện tại và `Cores/fix_bao_mat.md` để biết các hạng mục bảo mật còn mở.
 
 ---
 

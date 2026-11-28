@@ -1,7 +1,7 @@
 # CHIẾN LƯỢC PHÁT TRIỂN & QUY CHUẨN KỸ THUẬT (DEVELOPMENT STRATEGY)
 ## HỆ THỐNG HỌC & THI THỬ LUẬT GIAO THÔNG ĐƯỜNG BỘ TRỰC TUYẾN
 
-> **Cập nhật cấu trúc giao diện (2026-11-09):** Frontend phục vụ hai cổng riêng: học viên ở `localhost:5173` và quản trị ở `localhost:5174`. Cổng quản trị mặc định đến trang đăng nhập, không có đăng ký; khi dùng ngrok chỉ chia sẻ cổng học viên.
+> **Cập nhật cấu trúc giao diện (2026-11-26):** Frontend phục vụ hai cổng riêng: học viên ở `localhost:5173` và quản trị ở `localhost:5174`. Cổng quản trị mặc định đến trang đăng nhập, không có đăng ký; khi dùng ngrok chỉ chia sẻ cổng học viên.
 
 ---
 

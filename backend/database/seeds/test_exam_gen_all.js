@@ -1,6 +1,6 @@
 /**
  * Script: test_exam_gen_all.js
- * Mục đích: Test sinh đề thi cho tất cả 9 hạng mới
+ * Mục đích: Test sinh đề thi cho tất cả 6 hạng
  * Chạy: node database/seeds/test_exam_gen_all.js
  */
 
@@ -8,7 +8,7 @@ const examService = require('../../src/services/exam.service');
 const { pool } = require('../../src/config/db.config');
 
 async function testAllLicenses() {
-  console.log('🧪 Test sinh đề thi cho 9 hạng mới...\n');
+  console.log('🧪 Test sinh đề thi cho 6 hạng...\n');
 
   // Lấy danh sách license types từ DB
   const [licenses] = await pool.query(

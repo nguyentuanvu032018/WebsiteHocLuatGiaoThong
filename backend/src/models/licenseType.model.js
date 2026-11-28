@@ -2,7 +2,7 @@ const { pool } = require('../config/db.config');
 
 /**
  * Lớp Thực thể Hạng Giấy Phép Lái Xe & Phòng Thi Sát Hạch (License Type / Exam Room Model)
- * Quản lý các phòng thi theo hạng bằng: A, A1, B, B1, C, C1, D, D1, D2
+ * Quản lý các phòng thi theo hạng bằng: A, A1, B, B1, C, C1
  */
 class LicenseTypeModel {
   constructor(data = {}) {
@@ -90,7 +90,7 @@ class LicenseTypeModel {
   }
 
   /**
-   * Tìm hạng bằng theo mã ký hiệu (VD: 'A', 'B1', 'D2'...)
+   * Tìm hạng bằng theo mã ký hiệu (VD: 'A', 'B1', 'C1')
    * @param {string} code 
    * @returns {Promise<LicenseTypeModel|null>}
    */

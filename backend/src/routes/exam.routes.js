@@ -3,7 +3,7 @@ const router = express.Router();
 const examController = require('../controllers/exam.controller');
 const verifyToken = require('../middlewares/auth.middleware');
 
-// GET /api/v1/exams/license-types - Danh sách các hạng bằng (A, A1, B, B1, C, C1, D, D1, D2)
+// GET /api/v1/exams/license-types - Danh sách các hạng bằng (A, A1, B, B1, C, C1)
 router.get('/license-types', examController.getLicenseTypes);
 
 // GET /api/v1/exams/license-types/:id/rules - Xem cấu trúc ma trận của 1 hạng bằng

@@ -4,7 +4,7 @@
 > **Học phần:** Niên luận Ngành (CT466)  
 > **Kiến trúc:** Tách rời (Decoupled Architecture - RESTful API)  
 > **Công nghệ:** Node.js (Express) + MySQL 8.0 + Vue.js 3 (Vite, Pinia, Bootstrap 5)  
-> **Trạng thái dự án đến 2026-11-09:** Các phân hệ học viên, thi thử và quản trị chính đã được hiện thực; 9 hạng bằng, OTP email, nhận diện biển báo ResNet-50 và chatbot Gemini đã tích hợp. Học viên và admin chạy ở hai cổng riêng (`5173`/`5174`); cổng admin mặc định đến đăng nhập và không có đăng ký, ngrok chỉ được dùng cho cổng học viên. Lối vào ôn tập chung “7 Chương lý thuyết” đã được gỡ; ôn tập theo nhóm: A/A1 gồm chương I–V; B/B1 và C/C1 gồm 7 chương. Cấu trúc chương vẫn cần cho ôn theo hạng, ma trận thi và quản trị. Thi thử vẫn chọn hạng cụ thể; lịch sử nhóm lọc theo các hạng thành viên. Hạng mục kiểm thử còn lại theo checkpoint cần tiếp tục xác minh end-to-end trên môi trường có CSDL/dịch vụ.
+> **Trạng thái dự án đến 2026-11-26:** Các phân hệ học viên, thi thử và quản trị chính đã được hiện thực; 6 hạng bằng A, A1, B, B1, C, C1, OTP đăng ký/đặt lại mật khẩu, hồ sơ/avatar, nhận diện biển báo ResNet-50 và chatbot Groq đã tích hợp. Học viên và admin chạy ở hai cổng riêng (`5173`/`5174`); cổng admin mặc định đến đăng nhập và không có đăng ký, ngrok chỉ được dùng cho cổng học viên. Lối vào ôn tập chung “7 Chương lý thuyết” đã được gỡ; ôn tập theo nhóm: A/A1 gồm chương I–V; B/B1 và C/C1 gồm 7 chương. Hạng mục bảo mật còn mở được theo dõi trong `Cores/fix_bao_mat.md`.
 
 > **Tình trạng tiến độ:** `[/]` CP-01 đến CP-04 hoàn thành; CP-05 đang hoàn thiện, các task hiện được ghi đến CP-05.34. CP-05.6 (slide/kịch bản demo) vẫn cần theo dõi.
 
@@ -27,7 +27,7 @@ Dưới đây là thông tin hiện trạng mã nguồn và kiến trúc của h
 
 2. CÁC PHÂN HỆ ĐÃ HIỆN THỰC (TRẠNG THÁI CHI TIẾT TRONG CHECKPOINT):
 - [CP-01] Xác thực & Phân quyền: Đăng ký, đăng nhập, mã hóa bcryptjs, cấp phát và verify JWT Bearer Token, Middleware RBAC.
-- [CP-02] Ngân hàng dữ liệu & Engine thi: Dữ liệu 600 câu hỏi chuẩn Bộ GTVT, cờ điểm liệt `is_paralysis = 1`, 53 biển báo chuẩn QCVN 41:2019, 35 hành vi xử phạt theo Nghị định 100/123. Thuật toán xáo trộn câu hỏi Fisher-Yates, sinh đề ngẫu nhiên theo ma trận từng hạng bằng (A, A1, B, B1, C, C1, D, D1, D2). Thuật toán chấm điểm và phát hiện trượt câu điểm liệt ở Server. Bộ dữ liệu chuẩn hóa toàn vẹn UTF-8 (tích hợp script `fix_vietnamese_encoding.js` xử lý triệt để sự cố lệch bảng mã Windows).
+- [CP-02] Ngân hàng dữ liệu & Engine thi: Dữ liệu 600 câu hỏi chuẩn Bộ GTVT, cờ điểm liệt `is_paralysis = 1`, 53 biển báo chuẩn QCVN 41:2019, 35 hành vi xử phạt theo Nghị định 100/123. Thuật toán xáo trộn câu hỏi Fisher-Yates, sinh đề ngẫu nhiên theo ma trận từng hạng bằng (A, A1, B, B1, C, C1). Thuật toán chấm điểm và phát hiện trượt câu điểm liệt ở Server. Bộ dữ liệu chuẩn hóa toàn vẹn UTF-8 (tích hợp script `fix_vietnamese_encoding.js` xử lý triệt để sự cố lệch bảng mã Windows).
 - [CP-03] Giao diện Học viên: Ôn tập theo nhóm hạng trong phạm vi chương được áp dụng, chế độ ôn 60 câu điểm liệt, tra cứu biển báo/mức phạt tức thì, Phòng thi sát hạch lý thuyết `ExamRoomView.vue` (đồng hồ đếm ngược, phím tắt 1-4, bàn phím điều hướng câu, modal xác nhận nộp), màn hình kết quả thi `ExamResultView.vue`. Không còn lối vào ôn tập chung toàn bộ 7 chương.
 - Ôn tập theo nhóm GPLX: A/A1 gồm chương I–V; B/B1 và C/C1 gồm đủ 7 chương. Hạng trong cùng nhóm dùng chung phạm vi; thi thử vẫn chọn hạng cụ thể, còn lịch sử nhóm lọc theo các hạng thành viên.
 - [CP-04] Lịch sử thi & Quản trị Admin: Màn hình xem lại chi tiết bài thi `ExamReviewView.vue`, lịch sử thi cá nhân `ExamHistoryView.vue` kèm phân tích chương yếu; Admin Dashboard `AdminDashboardView.vue` với 4 thẻ KPI và biểu đồ Chart.js; Quản lý 600 câu hỏi `AdminQuestionsView.vue` (upload ảnh Multer, modal thêm/sửa, phân trang); Quản lý người dùng `AdminUsersView.vue` (khóa/mở tài khoản, phân quyền, cảnh báo khóa ngoại ON DELETE RESTRICT).
@@ -66,7 +66,7 @@ Hãy hoàn thiện màn hình tổng quan quản trị `frontend/src/views/admin
 2. Tích hợp thư viện biểu đồ Chart.js:
    - Biểu đồ Bar Chart: Thống kê số lượt thi và lượt đỗ theo 7 ngày gần nhất.
    - Biểu đồ Doughnut Chart: Tỷ lệ Đạt, Trượt điểm liệt, Trượt do thiếu điểm.
-3. Bảng xếp hạng Top học viên chăm chỉ và thống kê phân bố lượt thi theo từng hạng giấy phép lái xe (A, A1, B, B1, C, C1, D, D1, D2).
+3. Bảng xếp hạng Top học viên chăm chỉ và thống kê phân bố lượt thi theo từng hạng giấy phép lái xe (A, A1, B, B1, C, C1).
 ```
 
 ### Prompt 03: Quản lý Ngân hàng 600 Câu hỏi & Upload Ảnh Sa hình
@@ -270,26 +270,21 @@ Khi phát hiện ảnh tải lên (`/uploads/signs/...` hoặc `/uploads/questio
 
 ---
 
-## Prompt 14 — Cập nhật hệ thống hạng bằng lái xe 9 hạng mới (2026-11-02)
+## Prompt 14 — Cập nhật hệ thống hạng bằng lái xe 6 hạng (2026-11-02)
 
 ```markdown
-Đã chuyển đổi hoàn toàn hệ thống hạng bằng lái xe từ 8 hạng cũ (A1, A2, B1, B2, C, D, E, F)
-sang 9 hạng mới theo chuẩn Bộ GTVT: A, A1, B, B1, C, C1, D, D1, D2.
+Đã chuyển đổi hệ thống hạng bằng lái xe theo phạm vi dự án: A, A1, B, B1, C, C1.
 
 THAY ĐỔI ĐÃ THỰC HIỆN:
 
-1. Database — license_types (9 hạng hoàn chỉnh):
+1. Database — license_types (6 hạng):
    ID 1: A  - Hạng A  - Xe máy 2 bánh            (25 câu / 19 phút / đạt 21)
    ID 2: A1 - Hạng A1 - Xe máy dưới 175cc         (25 câu / 19 phút / đạt 21)
    ID 3: B  - Hạng B  - Ô tô con & xe tải nhẹ     (30 câu / 20 phút / đạt 27)
    ID 4: B1 - Hạng B1 - Ô tô số tự động           (30 câu / 20 phút / đạt 27)
    ID 5: C  - Hạng C  - Xe tải trên 3.5 tấn       (40 câu / 24 phút / đạt 36)
    ID 6: C1 - Hạng C1 - Xe tải dưới 3.5 tấn       (40 câu / 24 phút / đạt 36)
-   ID 7: D  - Hạng D  - Ô tô khách 10-30 chỗ      (45 câu / 26 phút / đạt 41)
-   ID 8: D1 - Hạng D1 - Ô tô khách 30-45 chỗ      (45 câu / 26 phút / đạt 41)
-   ID 9: D2 - Hạng D2 - Xe kéo rơ moóc            (45 câu / 26 phút / đạt 41)
-
-2. Database — exam_structure_rules: 63 rule entries (9 hạng × 7 chương), đúng theo
+2. Database — exam_structure_rules: ma trận theo 6 hạng × 7 chương, đúng theo
    ma trận chuẩn Bộ GTVT (xem backend/database/seeds/01_license_and_matrix.sql)
 
 3. Backend — db.config.js: Thêm charset: 'utf8mb4' và timezone: '+07:00' vào Connection Pool
@@ -297,12 +292,12 @@ THAY ĐỔI ĐÃ THỰC HIỆN:
 
 4. Scripts tạo ra:
    - backend/database/seeds/update_license_codes.js — cập nhật code+name license_types
-   - backend/database/seeds/test_exam_gen_all.js    — test sinh đề 9 hạng (kết quả: 9/9 ✅)
+   - backend/database/seeds/test_exam_gen_all.js    — test sinh đề 6 hạng
    - backend/database/seeds/check_encoding.js       — kiểm tra charset DB
 
-5. Frontend — ExamSelectView.vue: Load dynamic từ API, getLicenseIcon() đã xử lý 9 mã ✅
+5. Frontend — ExamSelectView.vue: Load dynamic từ API, getLicenseIcon() đã xử lý 6 mã ✅
 6. Frontend — npm run build: ✅ Không lỗi (573ms)
-7. API /api/v1/exams/license-types: Trả về 9 hạng đúng UTF-8 ✅
+7. API /api/v1/exams/license-types: Trả về 6 hạng đúng UTF-8 ✅
 
 CHÚ Ý QUAN TRỌNG:
 - Khi cần chạy SQL trên Windows MySQL CLI, dùng:
@@ -389,22 +384,21 @@ TRẠNG THÁI: ĐÃ HOÀN THÀNH 100% (RESOLVED)
 
 ---
 
-## Prompt 18 — Chatbot hỏi đáp Luật Giao Thông AI (Gemini) (2026-11-03)
+## Prompt 18 — Chatbot hỏi đáp Luật Giao Thông AI (Groq) (2026-11-04)
 
 ```markdown
 TRẠNG THÁI: ĐÃ HOÀN THÀNH 100% (RESOLVED)
 
 1. Nghiệp vụ:
    - Nằm trong menu "Tra cứu luật" → "Hỏi đáp AI" (route `/lookup/chatbot`).
-   - Sử dụng Google Gemini API (`gemini-3.5-flash`) với system instruction chuyên biệt về Luật GTĐB Việt Nam.
+   - Sử dụng Groq Cloud API (`openai/gpt-oss-120b`) với system instruction chuyên biệt về Luật GTĐB Việt Nam.
    - Hội thoại đa lượt: Lưu lịch sử session in-memory (tối đa 20 lượt/session, tự xóa sau 30 phút).
    - Từ chối lịch sự các câu hỏi ngoài phạm vi giao thông (nấu ăn, địa lý, toán học...).
-   - Phạm vi kiến thức: Luật GTĐB, NĐ 100/2019 & 123/2021, QCVN 41:2019, 600 câu thi GPLX, 9 hạng bằng.
+   - Phạm vi kiến thức: Luật GTĐB, NĐ 100/2019 & 123/2021, QCVN 41:2019, 600 câu thi GPLX, 6 hạng bằng.
 
 2. Cấu hình:
-   - `GEMINI_API_KEY=...` trong `backend/.env`
-   - Model: `gemini-3.5-flash` (gemini-2.0-flash và gemini-2.5-flash đã deprecated/unavailable)
-   - `@google/genai` package đã cài: `npm install @google/genai` (backend)
+   - `GROQ_API_KEY=...` và `GROQ_MODEL=openai/gpt-oss-120b` trong `backend/.env`
+   - Có cơ chế fallback sang `qwen/qwen3.8-27b` khi model chính không khả dụng.
 
 3. Kiến trúc mã nguồn:
    - Backend: `services/chatbot.service.js` (Singleton, session Map, fire-and-forget safe),
@@ -417,8 +411,7 @@ TRẠNG THÁI: ĐÃ HOÀN THÀNH 100% (RESOLVED)
 
 4. LƯU Ý:
    - sessionId phải là string duy nhất mỗi tab (frontend tạo bằng `Date.now() + random`).
-   - Nếu model 503 UNAVAILABLE: Thử lại sau vài giây, đây là lỗi tạm thời do cao tải.
-   - Không dùng `gemini-2.0-flash` (404 deprecated) hay `gemini-2.5-flash` (404 unavailable for new users).
+   - Nếu Groq trả lỗi quá tải hoặc quota: hệ thống retry/fallback theo cấu hình trong `chatbot.service.js`.
 ```
 
 ---

@@ -61,7 +61,6 @@ const currentYear = new Date().getFullYear();
               <router-link to="/exam" class="footer-link">Hạng C, C1 (Xe tải)</router-link>
             </li>
             <li class="mb-2">
-              <router-link to="/exam" class="footer-link">Hạng D, D1, D2 (Xe khách & chuyên dùng)</router-link>
             </li>
           </ul>
         </div>

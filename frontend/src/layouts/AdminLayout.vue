@@ -5,6 +5,7 @@ import { useAuthStore } from '../stores/auth';
 import { resolveAssetUrl } from '../services/api';
 import Swal from 'sweetalert2';
 import ProfileModal from '../components/common/ProfileModal.vue';
+import { ADMIN_PREVIEW_HASH, getStudentPortalUrl } from '../utils/portals';
 
 const router = useRouter();
 const route = useRoute();
@@ -12,6 +13,10 @@ const authStore = useAuthStore();
 const isSidebarCollapsed = ref(false);
 const showProfileModal = ref(false);
 const avatarLoadFailed = ref(false);
+
+const openStudentPortal = () => {
+  window.location.assign(`${getStudentPortalUrl('/')}${ADMIN_PREVIEW_HASH}`);
+};
 
 watch(() => authStore.userAvatar, () => {
   avatarLoadFailed.value = false;
@@ -178,8 +183,9 @@ const handleLogout = async () => {
 
         <ul class="nav nav-pills flex-column gap-1">
           <li class="nav-item">
-            <a 
-              href="http://localhost:5173/" 
+            <a
+              href="#"
+              @click.prevent="openStudentPortal"
               class="nav-link d-flex align-items-center justify-content-between py-2 px-3 rounded-3 text-light bg-dark-subtle bg-opacity-25 border border-secondary border-opacity-25"
             >
               <div class="d-flex align-items-center gap-2">
